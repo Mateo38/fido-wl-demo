@@ -161,9 +161,6 @@ export function LoginPage() {
           {fidoLoading ? 'Vérification...' : 'Se connecter avec une passkey'}
         </button>
 
-        <p className="text-center text-sm text-slate-500 mt-6">
-          Démo : marie.dupont@email.fr / Demo1234!
-        </p>
       </div>
     </div>
   );

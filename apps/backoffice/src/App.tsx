@@ -68,7 +68,6 @@ function AdminLogin() {
             {loading ? 'Connexion...' : 'Se connecter'}
           </button>
         </form>
-        <p className="text-center text-xs text-gray-400 mt-4">sophie.bernard@wlbank.fr / Admin1234!</p>
       </div>
     </div>
   );
