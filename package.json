@@ -1,0 +1,23 @@
+{
+  "name": "fido-wl-demo",
+  "version": "1.0.0",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "dev": "concurrently -n server,bank,admin -c blue,green,yellow \"npm run dev -w apps/fido-server\" \"npm run dev -w apps/wl-bank\" \"npm run dev -w apps/backoffice\"",
+    "dev:server": "npm run dev -w apps/fido-server",
+    "dev:bank": "npm run dev -w apps/wl-bank",
+    "dev:backoffice": "npm run dev -w apps/backoffice",
+    "build:shared": "npm run build -w packages/shared",
+    "db:migrate": "npm run db:migrate -w apps/fido-server",
+    "db:seed": "npm run db:seed -w apps/fido-server",
+    "db:reset": "npm run db:reset -w apps/fido-server"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2",
+    "typescript": "^5.4.0"
+  }
+}
