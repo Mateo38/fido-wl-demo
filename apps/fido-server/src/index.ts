@@ -15,8 +15,12 @@ import { errorHandler } from './middleware/errorHandler';
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+const allowedOrigins = process.env.CORS_ORIGINS
+  ? process.env.CORS_ORIGINS.split(',')
+  : ['http://localhost:5173', 'http://localhost:5174'];
+
 app.use(cors({
-  origin: ['http://localhost:5173', 'http://localhost:5174'],
+  origin: allowedOrigins,
   credentials: true,
 }));
 app.use(express.json());
@@ -32,5 +36,5 @@ app.use('/api', healthRoutes);
 app.use(errorHandler);
 
 app.listen(PORT, () => {
-  console.log(`FIDO Server running on http://localhost:${PORT}`);
+  console.log(`FIDO Server running on port ${PORT}`);
 });
