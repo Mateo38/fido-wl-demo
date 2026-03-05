@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useFido } from '../hooks/useFido';
 import { useTranslation } from 'react-i18next';
 import { Shield, Fingerprint, Mail, Lock, AlertCircle } from 'lucide-react';
+import { LanguageSelector } from '../components/LanguageSelector';
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1920&q=80&auto=format&fit=crop';
 
@@ -200,6 +201,10 @@ export function LoginPage() {
             <Fingerprint className="w-5 h-5 text-violet-400" />
             {fidoLoading ? t('login.verifying') : t('login.passkey_login')}
           </button>
+
+          <div className="mt-6">
+            <LanguageSelector variant="login" />
+          </div>
         </div>
       </div>
     </div>
