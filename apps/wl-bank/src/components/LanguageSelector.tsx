@@ -1,35 +1,30 @@
 import { useTranslation } from 'react-i18next';
 
 const languages = [
-  { code: 'fr', flag: '\ud83c\uddeb\ud83c\uddf7', label: 'FR' },
-  { code: 'en', flag: '\ud83c\uddec\ud83c\udde7', label: 'EN' },
-  { code: 'de', flag: '\ud83c\udde9\ud83c\uddea', label: 'DE' },
-  { code: 'nl', flag: '\ud83c\uddf3\ud83c\uddf1', label: 'NL' },
+  { code: 'fr', flag: '\ud83c\uddeb\ud83c\uddf7', label: 'Fran\u00e7ais' },
+  { code: 'en', flag: '\ud83c\uddec\ud83c\udde7', label: 'English' },
+  { code: 'de', flag: '\ud83c\udde9\ud83c\uddea', label: 'Deutsch' },
+  { code: 'nl', flag: '\ud83c\uddf3\ud83c\uddf1', label: 'Nederlands' },
 ];
 
 export function LanguageSelector({ variant = 'sidebar' }: { variant?: 'sidebar' | 'login' }) {
   const { i18n } = useTranslation();
 
+  const className = variant === 'login'
+    ? 'w-full bg-slate-900 border border-slate-800 rounded-xl px-3 py-2.5 text-sm text-slate-300 focus:outline-none focus:ring-2 focus:ring-violet-500 cursor-pointer'
+    : 'w-full bg-slate-800 border border-slate-700 rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:ring-2 focus:ring-violet-500 cursor-pointer';
+
   return (
-    <div className="flex gap-1">
+    <select
+      value={i18n.language}
+      onChange={(e) => i18n.changeLanguage(e.target.value)}
+      className={className}
+    >
       {languages.map(({ code, flag, label }) => (
-        <button
-          key={code}
-          onClick={() => i18n.changeLanguage(code)}
-          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
-            i18n.language === code
-              ? variant === 'login'
-                ? 'bg-violet-600/20 text-violet-400 border border-violet-500/30'
-                : 'bg-violet-500/20 text-violet-300'
-              : variant === 'login'
-                ? 'text-slate-500 hover:text-slate-300 hover:bg-slate-800'
-                : 'text-slate-500 hover:text-white hover:bg-slate-800'
-          }`}
-        >
-          <span className="text-base leading-none">{flag}</span>
-          {label}
-        </button>
+        <option key={code} value={code}>
+          {flag} {label}
+        </option>
       ))}
-    </div>
+    </select>
   );
 }
