@@ -1,10 +1,14 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
 import { TrendingUp, TrendingDown, Wallet, CreditCard, ArrowUpRight, ArrowDownLeft } from 'lucide-react';
 
 export function DashboardPage() {
   const { user } = useAuth();
+  const { t } = useTranslation();
+  const { formatCurrency, formatDate } = useLocale();
   const [accounts, setAccounts] = useState<any[]>([]);
   const [transactions, setTransactions] = useState<any[]>([]);
   const [cards, setCards] = useState<any[]>([]);
@@ -28,13 +32,13 @@ export function DashboardPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-1">Bonjour, {user?.first_name}</h1>
-      <p className="text-slate-400 mb-8">Voici un aperçu de vos finances</p>
+      <h1 className="text-2xl font-bold text-white mb-1">{t('dashboard.greeting', { name: user?.first_name })}</h1>
+      <p className="text-slate-400 mb-8">{t('dashboard.overview')}</p>
 
       {/* Total Balance */}
       <div className="bg-gradient-to-br from-violet-600 to-violet-800 rounded-2xl p-6 mb-6">
-        <p className="text-violet-200 text-sm mb-1">Solde total</p>
-        <p className="text-3xl font-bold text-white">{totalBalance.toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</p>
+        <p className="text-violet-200 text-sm mb-1">{t('dashboard.total_balance')}</p>
+        <p className="text-3xl font-bold text-white">{formatCurrency(totalBalance)}</p>
       </div>
 
       {/* Accounts */}
@@ -49,9 +53,9 @@ export function DashboardPage() {
               <span className="text-xs text-slate-500 font-mono">{account.iban.slice(-8)}</span>
             </div>
             <p className="text-xl font-bold text-white">
-              {parseFloat(account.balance).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+              {formatCurrency(parseFloat(account.balance))}
             </p>
-            <p className="text-xs text-slate-500 mt-1 capitalize">{account.account_type === 'checking' ? 'Compte courant' : 'Épargne'}</p>
+            <p className="text-xs text-slate-500 mt-1 capitalize">{account.account_type === 'checking' ? t('dashboard.checking') : t('dashboard.savings')}</p>
           </div>
         ))}
       </div>
@@ -61,7 +65,7 @@ export function DashboardPage() {
         <div className="mb-8">
           <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
             <CreditCard className="w-5 h-5 text-violet-400" />
-            Vos cartes
+            {t('dashboard.your_cards')}
           </h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {cards.map((card: any) => (
@@ -69,11 +73,11 @@ export function DashboardPage() {
                 <div className="flex justify-between items-start mb-8">
                   <span className="text-xs text-slate-400 uppercase">{card.card_network} {card.card_tier}</span>
                   <span className={`text-xs px-2 py-0.5 rounded-full ${card.status === 'active' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'}`}>
-                    {card.status === 'active' ? 'Active' : card.status}
+                    {card.status === 'active' ? t('dashboard.card_active') : card.status}
                   </span>
                 </div>
                 <p className="text-lg font-mono text-white mb-2">•••• •••• •••• {card.card_number_last4}</p>
-                <p className="text-xs text-slate-500">Expire {card.expiry_date}</p>
+                <p className="text-xs text-slate-500">{t('dashboard.card_expires', { date: card.expiry_date })}</p>
               </div>
             ))}
           </div>
@@ -81,7 +85,7 @@ export function DashboardPage() {
       )}
 
       {/* Recent Transactions */}
-      <h2 className="text-lg font-semibold text-white mb-4">Dernières transactions</h2>
+      <h2 className="text-lg font-semibold text-white mb-4">{t('dashboard.recent_transactions')}</h2>
       <div className="bg-slate-900 border border-slate-800 rounded-xl divide-y divide-slate-800">
         {transactions.map((txn: any) => (
           <div key={txn.id} className="flex items-center justify-between p-4">
@@ -98,14 +102,14 @@ export function DashboardPage() {
             </div>
             <div className="text-right">
               <p className={`text-sm font-semibold ${txn.type === 'credit' ? 'text-emerald-400' : 'text-white'}`}>
-                {txn.type === 'credit' ? '+' : '-'}{parseFloat(txn.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                {txn.type === 'credit' ? '+' : '-'}{formatCurrency(parseFloat(txn.amount))}
               </p>
-              <p className="text-xs text-slate-500">{new Date(txn.date).toLocaleDateString('fr-FR')}</p>
+              <p className="text-xs text-slate-500">{formatDate(txn.date)}</p>
             </div>
           </div>
         ))}
         {transactions.length === 0 && (
-          <p className="text-center text-slate-500 py-8">Aucune transaction</p>
+          <p className="text-center text-slate-500 py-8">{t('dashboard.no_transactions')}</p>
         )}
       </div>
     </div>

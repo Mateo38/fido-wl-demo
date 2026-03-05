@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useFido } from '../hooks/useFido';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
 import { Fingerprint, Trash2, Plus, Smartphone, Monitor, AlertCircle } from 'lucide-react';
 
 export function SettingsPage() {
   const { user } = useAuth();
   const { registerPasskey, loading: fidoLoading, error: fidoError } = useFido();
+  const { t } = useTranslation();
+  const { formatDate } = useLocale();
   const [passkeys, setPasskeys] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
@@ -18,16 +22,16 @@ export function SettingsPage() {
   useEffect(() => { loadPasskeys(); }, []);
 
   const handleRegister = async () => {
-    const name = prompt('Nom de la passkey (ex: MacBook Pro, iPhone)') || 'Ma passkey';
+    const name = prompt(t('settings.passkey_name_prompt')) || t('settings.passkey_default_name');
     const success = await registerPasskey(name);
     if (success) {
-      setMessage('Passkey enregistrée avec succès');
+      setMessage(t('settings.passkey_registered'));
       loadPasskeys();
     }
   };
 
   const handleDelete = async (id: string) => {
-    if (!confirm('Supprimer cette passkey ?')) return;
+    if (!confirm(t('settings.delete_passkey_confirm'))) return;
     try {
       await api.deletePasskey(id);
       loadPasskeys();
@@ -38,22 +42,22 @@ export function SettingsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">Paramètres</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">{t('settings.title')}</h1>
 
       {/* Profile */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
-        <h2 className="text-lg font-semibold text-white mb-4">Profil</h2>
+        <h2 className="text-lg font-semibold text-white mb-4">{t('settings.profile')}</h2>
         <div className="grid grid-cols-2 gap-4 text-sm">
           <div>
-            <span className="text-slate-400">Prénom</span>
+            <span className="text-slate-400">{t('settings.first_name')}</span>
             <p className="text-white mt-1">{user?.first_name}</p>
           </div>
           <div>
-            <span className="text-slate-400">Nom</span>
+            <span className="text-slate-400">{t('settings.last_name')}</span>
             <p className="text-white mt-1">{user?.last_name}</p>
           </div>
           <div className="col-span-2">
-            <span className="text-slate-400">Email</span>
+            <span className="text-slate-400">{t('settings.email')}</span>
             <p className="text-white mt-1">{user?.email}</p>
           </div>
         </div>
@@ -64,12 +68,12 @@ export function SettingsPage() {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2">
             <Fingerprint className="w-5 h-5 text-violet-400" />
-            Passkeys
+            {t('settings.passkeys')}
           </h2>
           <button onClick={handleRegister} disabled={fidoLoading}
             className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors disabled:opacity-50">
             <Plus className="w-4 h-4" />
-            {fidoLoading ? 'Enregistrement...' : 'Ajouter une passkey'}
+            {fidoLoading ? t('settings.registering') : t('settings.add_passkey')}
           </button>
         </div>
 
@@ -93,8 +97,8 @@ export function SettingsPage() {
         ) : passkeys.length === 0 ? (
           <div className="text-center py-8">
             <Fingerprint className="w-12 h-12 text-slate-600 mx-auto mb-3" />
-            <p className="text-slate-400 mb-1">Aucune passkey enregistrée</p>
-            <p className="text-sm text-slate-500">Ajoutez une passkey pour une connexion plus rapide et sécurisée</p>
+            <p className="text-slate-400 mb-1">{t('settings.no_passkeys')}</p>
+            <p className="text-sm text-slate-500">{t('settings.no_passkeys_hint')}</p>
           </div>
         ) : (
           <div className="space-y-3">
@@ -109,8 +113,8 @@ export function SettingsPage() {
                   <div>
                     <p className="text-sm font-medium text-white">{pk.friendly_name || 'Passkey'}</p>
                     <p className="text-xs text-slate-500">
-                      Créée le {new Date(pk.created_at).toLocaleDateString('fr-FR')}
-                      {pk.last_used_at && ` · Dernière utilisation ${new Date(pk.last_used_at).toLocaleDateString('fr-FR')}`}
+                      {t('settings.created_on', { date: formatDate(pk.created_at) })}
+                      {pk.last_used_at && ` · ${t('settings.last_used', { date: formatDate(pk.last_used_at) })}`}
                     </p>
                   </div>
                 </div>

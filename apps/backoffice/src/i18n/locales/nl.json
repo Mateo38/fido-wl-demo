@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "FIDO Backoffice",
+    "subtitle": "FIDO-serverbeheer",
+    "powered_by": "Powered by Worldline",
+    "logging_in": "Inloggen...",
+    "submit": "Inloggen",
+    "admin_required": "Admintoegang vereist"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Gebruikers",
+    "logs": "Logboeken",
+    "health": "Gezondheid",
+    "logout": "Uitloggen"
+  },
+  "dashboard": {
+    "title": "FIDO Dashboard",
+    "users": "Gebruikers",
+    "passkeys": "Passkeys",
+    "authentications": "Authenticaties",
+    "success_rate": "Slagingspercentage",
+    "activity_title": "FIDO-activiteit (30 dagen)",
+    "registrations": "Registraties",
+    "chart_authentications": "Authenticaties",
+    "device_types": "Apparaattypen",
+    "no_data": "Geen gegevens"
+  },
+  "users": {
+    "title": "Gebruikers",
+    "col_user": "Gebruiker",
+    "col_email": "E-mail",
+    "col_role": "Rol",
+    "col_passkeys": "Passkeys",
+    "col_registration": "Registratie"
+  },
+  "logs": {
+    "title": "Activiteitenlogboek",
+    "all_actions": "Alle acties",
+    "login_success": "Login geslaagd",
+    "login_failure": "Login mislukt",
+    "passkey_registration": "Passkey-registratie",
+    "passkey_auth_success": "Passkey-auth geslaagd",
+    "passkey_auth_failure": "Passkey-auth mislukt",
+    "all_statuses": "Alle statussen",
+    "success": "Geslaagd",
+    "failure": "Mislukt",
+    "col_date": "Datum",
+    "col_action": "Actie",
+    "col_user": "Gebruiker",
+    "col_status": "Status",
+    "col_ip": "IP",
+    "no_logs": "Geen logboeken",
+    "entry_count": "{{count}} vermelding",
+    "entry_count_plural": "{{count}} vermeldingen",
+    "previous": "Vorige",
+    "next": "Volgende"
+  },
+  "health": {
+    "title": "Servergezondheid",
+    "refresh": "Vernieuwen",
+    "general_status": "Algemene status",
+    "uptime": "Uptime",
+    "database": "Database",
+    "connection": "Verbinding",
+    "connected": "Verbonden",
+    "disconnected": "Verbroken",
+    "latency": "Latentie",
+    "memory": "Geheugen",
+    "used": "Gebruikt"
+  }
+}

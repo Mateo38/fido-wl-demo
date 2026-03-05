@@ -1,5 +1,7 @@
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useTranslation } from 'react-i18next';
+import { LanguageSelector } from './LanguageSelector';
 import {
   LayoutDashboard,
   ArrowLeftRight,
@@ -10,17 +12,18 @@ import {
   Shield,
 } from 'lucide-react';
 
-const navItems = [
-  { to: '/', icon: LayoutDashboard, label: 'Tableau de bord' },
-  { to: '/transactions', icon: ArrowLeftRight, label: 'Transactions' },
-  { to: '/cards', icon: CreditCard, label: 'Cartes' },
-  { to: '/transfers', icon: Send, label: 'Virements' },
-  { to: '/settings', icon: Settings, label: 'Paramètres' },
+const navKeys = [
+  { to: '/', icon: LayoutDashboard, key: 'nav.dashboard' },
+  { to: '/transactions', icon: ArrowLeftRight, key: 'nav.transactions' },
+  { to: '/cards', icon: CreditCard, key: 'nav.cards' },
+  { to: '/transfers', icon: Send, key: 'nav.transfers' },
+  { to: '/settings', icon: Settings, key: 'nav.settings' },
 ];
 
 export function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogout = () => {
     logout();
@@ -39,7 +42,7 @@ export function Layout() {
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
-          {navItems.map(({ to, icon: Icon, label }) => (
+          {navKeys.map(({ to, icon: Icon, key }) => (
             <NavLink
               key={to}
               to={to}
@@ -53,7 +56,7 @@ export function Layout() {
               }
             >
               <Icon className="w-5 h-5" />
-              {label}
+              {t(key)}
             </NavLink>
           ))}
         </nav>
@@ -68,12 +71,15 @@ export function Layout() {
               <p className="text-xs text-slate-400 truncate">{user?.email}</p>
             </div>
           </div>
+          <div className="px-4 mb-2">
+            <LanguageSelector />
+          </div>
           <button
             onClick={handleLogout}
             className="flex items-center gap-3 px-4 py-2 text-sm text-slate-400 hover:text-red-400 transition-colors w-full rounded-lg hover:bg-slate-800"
           >
             <LogOut className="w-4 h-4" />
-            Déconnexion
+            {t('nav.logout')}
           </button>
         </div>
       </aside>

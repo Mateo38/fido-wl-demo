@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "FIDO Backoffice",
+    "subtitle": "FIDO server administration",
+    "powered_by": "Powered by Worldline",
+    "logging_in": "Logging in...",
+    "submit": "Log in",
+    "admin_required": "Admin access required"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Users",
+    "logs": "Logs",
+    "health": "Health",
+    "logout": "Log out"
+  },
+  "dashboard": {
+    "title": "FIDO Dashboard",
+    "users": "Users",
+    "passkeys": "Passkeys",
+    "authentications": "Authentications",
+    "success_rate": "Success rate",
+    "activity_title": "FIDO Activity (30 days)",
+    "registrations": "Registrations",
+    "chart_authentications": "Authentications",
+    "device_types": "Device types",
+    "no_data": "No data"
+  },
+  "users": {
+    "title": "Users",
+    "col_user": "User",
+    "col_email": "Email",
+    "col_role": "Role",
+    "col_passkeys": "Passkeys",
+    "col_registration": "Registration"
+  },
+  "logs": {
+    "title": "Activity log",
+    "all_actions": "All actions",
+    "login_success": "Login success",
+    "login_failure": "Login failure",
+    "passkey_registration": "Passkey registration",
+    "passkey_auth_success": "Passkey auth success",
+    "passkey_auth_failure": "Passkey auth failure",
+    "all_statuses": "All statuses",
+    "success": "Success",
+    "failure": "Failure",
+    "col_date": "Date",
+    "col_action": "Action",
+    "col_user": "User",
+    "col_status": "Status",
+    "col_ip": "IP",
+    "no_logs": "No logs",
+    "entry_count": "{{count}} entry",
+    "entry_count_plural": "{{count}} entries",
+    "previous": "Previous",
+    "next": "Next"
+  },
+  "health": {
+    "title": "Server health",
+    "refresh": "Refresh",
+    "general_status": "General status",
+    "uptime": "Uptime",
+    "database": "Database",
+    "connection": "Connection",
+    "connected": "Connected",
+    "disconnected": "Disconnected",
+    "latency": "Latency",
+    "memory": "Memory",
+    "used": "Used"
+  }
+}

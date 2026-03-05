@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "FIDO Backoffice",
+    "subtitle": "FIDO-Server-Verwaltung",
+    "powered_by": "Powered by Worldline",
+    "logging_in": "Anmeldung...",
+    "submit": "Anmelden",
+    "admin_required": "Admin-Zugang erforderlich"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Benutzer",
+    "logs": "Protokolle",
+    "health": "Zustand",
+    "logout": "Abmelden"
+  },
+  "dashboard": {
+    "title": "FIDO Dashboard",
+    "users": "Benutzer",
+    "passkeys": "Passkeys",
+    "authentications": "Authentifizierungen",
+    "success_rate": "Erfolgsrate",
+    "activity_title": "FIDO-Aktivit\u00e4t (30 Tage)",
+    "registrations": "Registrierungen",
+    "chart_authentications": "Authentifizierungen",
+    "device_types": "Ger\u00e4tetypen",
+    "no_data": "Keine Daten"
+  },
+  "users": {
+    "title": "Benutzer",
+    "col_user": "Benutzer",
+    "col_email": "E-Mail",
+    "col_role": "Rolle",
+    "col_passkeys": "Passkeys",
+    "col_registration": "Registrierung"
+  },
+  "logs": {
+    "title": "Aktivit\u00e4tsprotokoll",
+    "all_actions": "Alle Aktionen",
+    "login_success": "Login erfolgreich",
+    "login_failure": "Login fehlgeschlagen",
+    "passkey_registration": "Passkey-Registrierung",
+    "passkey_auth_success": "Passkey-Auth erfolgreich",
+    "passkey_auth_failure": "Passkey-Auth fehlgeschlagen",
+    "all_statuses": "Alle Status",
+    "success": "Erfolg",
+    "failure": "Fehler",
+    "col_date": "Datum",
+    "col_action": "Aktion",
+    "col_user": "Benutzer",
+    "col_status": "Status",
+    "col_ip": "IP",
+    "no_logs": "Keine Protokolle",
+    "entry_count": "{{count}} Eintrag",
+    "entry_count_plural": "{{count}} Eintr\u00e4ge",
+    "previous": "Zur\u00fcck",
+    "next": "Weiter"
+  },
+  "health": {
+    "title": "Serverzustand",
+    "refresh": "Aktualisieren",
+    "general_status": "Allgemeiner Status",
+    "uptime": "Betriebszeit",
+    "database": "Datenbank",
+    "connection": "Verbindung",
+    "connected": "Verbunden",
+    "disconnected": "Getrennt",
+    "latency": "Latenz",
+    "memory": "Speicher",
+    "used": "Verwendet"
+  }
+}

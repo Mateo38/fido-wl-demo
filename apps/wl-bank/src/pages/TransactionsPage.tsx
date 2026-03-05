@@ -1,26 +1,32 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
 import { ArrowUpRight, ArrowDownLeft, Search, Filter } from 'lucide-react';
 
-const categories = [
-  { value: '', label: 'Toutes' },
-  { value: 'salary', label: 'Salaire' },
-  { value: 'rent', label: 'Loyer' },
-  { value: 'groceries', label: 'Courses' },
-  { value: 'utilities', label: 'Factures' },
-  { value: 'transport', label: 'Transport' },
-  { value: 'entertainment', label: 'Loisirs' },
-  { value: 'restaurant', label: 'Restaurant' },
-  { value: 'shopping', label: 'Shopping' },
-  { value: 'health', label: 'Santé' },
-  { value: 'insurance', label: 'Assurance' },
-  { value: 'subscription', label: 'Abonnement' },
-  { value: 'transfer', label: 'Virement' },
+const categoryKeys = [
+  { value: '', key: 'transactions.all' },
+  { value: 'salary', key: 'transactions.salary' },
+  { value: 'rent', key: 'transactions.rent' },
+  { value: 'groceries', key: 'transactions.groceries' },
+  { value: 'utilities', key: 'transactions.utilities' },
+  { value: 'transport', key: 'transactions.transport' },
+  { value: 'entertainment', key: 'transactions.entertainment' },
+  { value: 'restaurant', key: 'transactions.restaurant' },
+  { value: 'shopping', key: 'transactions.shopping' },
+  { value: 'health', key: 'transactions.health' },
+  { value: 'insurance', key: 'transactions.insurance' },
+  { value: 'subscription', key: 'transactions.subscription' },
+  { value: 'transfer', key: 'transactions.transfer' },
 ];
 
-const categoryLabels: Record<string, string> = Object.fromEntries(categories.filter(c => c.value).map(c => [c.value, c.label]));
+const categoryKeyMap: Record<string, string> = Object.fromEntries(
+  categoryKeys.filter(c => c.value).map(c => [c.value, c.key])
+);
 
 export function TransactionsPage() {
+  const { t } = useTranslation();
+  const { formatCurrency, formatDate } = useLocale();
   const [transactions, setTransactions] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -42,7 +48,7 @@ export function TransactionsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">Transactions</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">{t('transactions.title')}</h1>
 
       {/* Filters */}
       <div className="flex gap-3 mb-6">
@@ -53,8 +59,8 @@ export function TransactionsPage() {
             onChange={(e) => { setCategory(e.target.value); setPage(1); }}
             className="w-full bg-slate-900 border border-slate-700 rounded-xl py-2.5 pl-10 pr-4 text-sm text-white appearance-none focus:outline-none focus:ring-2 focus:ring-violet-500"
           >
-            {categories.map((c) => (
-              <option key={c.value} value={c.value}>{c.label}</option>
+            {categoryKeys.map((c) => (
+              <option key={c.value} value={c.value}>{t(c.key)}</option>
             ))}
           </select>
         </div>
@@ -67,7 +73,7 @@ export function TransactionsPage() {
             <div className="animate-spin w-6 h-6 border-2 border-violet-500 border-t-transparent rounded-full" />
           </div>
         ) : transactions.length === 0 ? (
-          <p className="text-center text-slate-500 py-12">Aucune transaction</p>
+          <p className="text-center text-slate-500 py-12">{t('transactions.no_transactions')}</p>
         ) : (
           transactions.map((txn: any) => (
             <div key={txn.id} className="flex items-center justify-between p-4 hover:bg-slate-800/50 transition-colors">
@@ -84,13 +90,13 @@ export function TransactionsPage() {
               </div>
               <div className="flex items-center gap-4">
                 <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">
-                  {categoryLabels[txn.category] || txn.category}
+                  {categoryKeyMap[txn.category] ? t(categoryKeyMap[txn.category]) : txn.category}
                 </span>
                 <div className="text-right min-w-[100px]">
                   <p className={`text-sm font-semibold ${txn.type === 'credit' ? 'text-emerald-400' : 'text-white'}`}>
-                    {txn.type === 'credit' ? '+' : '-'}{parseFloat(txn.amount).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}
+                    {txn.type === 'credit' ? '+' : '-'}{formatCurrency(parseFloat(txn.amount))}
                   </p>
-                  <p className="text-xs text-slate-500">{new Date(txn.date).toLocaleDateString('fr-FR')}</p>
+                  <p className="text-xs text-slate-500">{formatDate(txn.date)}</p>
                 </div>
               </div>
             </div>
@@ -101,14 +107,14 @@ export function TransactionsPage() {
       {/* Pagination */}
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-sm text-slate-500">{total} transaction{total > 1 ? 's' : ''}</p>
+          <p className="text-sm text-slate-500">{total > 1 ? t('transactions.count_plural', { count: total }) : t('transactions.count', { count: total })}</p>
           <div className="flex gap-2">
             <button
               onClick={() => setPage(p => Math.max(1, p - 1))}
               disabled={page === 1}
               className="px-3 py-1.5 text-sm bg-slate-800 text-slate-300 rounded-lg disabled:opacity-50 hover:bg-slate-700 transition-colors"
             >
-              Précédent
+              {t('transactions.previous')}
             </button>
             <span className="px-3 py-1.5 text-sm text-slate-400">
               {page} / {totalPages}
@@ -118,7 +124,7 @@ export function TransactionsPage() {
               disabled={page === totalPages}
               className="px-3 py-1.5 text-sm bg-slate-800 text-slate-300 rounded-lg disabled:opacity-50 hover:bg-slate-700 transition-colors"
             >
-              Suivant
+              {t('transactions.next')}
             </button>
           </div>
         </div>

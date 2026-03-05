@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
 import { Send, UserPlus, Trash2, AlertCircle, CheckCircle } from 'lucide-react';
 
 export function TransfersPage() {
+  const { t } = useTranslation();
+  const { formatCurrency } = useLocale();
   const [accounts, setAccounts] = useState<any[]>([]);
   const [beneficiaries, setBeneficiaries] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -43,7 +47,7 @@ export function TransfersPage() {
         amount: parseFloat(amount),
         description,
       });
-      setMessage({ type: 'success', text: 'Virement effectué avec succès' });
+      setMessage({ type: 'success', text: t('transfers.transfer_success') });
       setAmount('');
       setDescription('');
       setBeneficiaryId('');
@@ -80,15 +84,15 @@ export function TransfersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">Virements</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">{t('transfers.title')}</h1>
 
       {/* Tabs */}
       <div className="flex gap-1 bg-slate-900 p-1 rounded-xl mb-6 w-fit">
         <button onClick={() => setTab('transfer')} className={`px-4 py-2 text-sm rounded-lg transition-colors ${tab === 'transfer' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-white'}`}>
-          Nouveau virement
+          {t('transfers.new_transfer')}
         </button>
         <button onClick={() => setTab('beneficiaries')} className={`px-4 py-2 text-sm rounded-lg transition-colors ${tab === 'beneficiaries' ? 'bg-violet-600 text-white' : 'text-slate-400 hover:text-white'}`}>
-          Bénéficiaires
+          {t('transfers.beneficiaries')}
         </button>
       </div>
 
@@ -103,65 +107,65 @@ export function TransfersPage() {
         <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 max-w-lg">
           <form onSubmit={handleTransfer} className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Compte débiteur</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('transfers.from_account')}</label>
               <select value={fromAccount} onChange={e => setFromAccount(e.target.value)}
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-violet-500">
                 {accounts.map((a: any) => (
-                  <option key={a.id} value={a.id}>{a.label} - {parseFloat(a.balance).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' })}</option>
+                  <option key={a.id} value={a.id}>{a.label} - {formatCurrency(parseFloat(a.balance))}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Bénéficiaire</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('transfers.beneficiary')}</label>
               <select value={beneficiaryId} onChange={e => setBeneficiaryId(e.target.value)} required
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-white focus:outline-none focus:ring-2 focus:ring-violet-500">
-                <option value="">Sélectionner un bénéficiaire</option>
+                <option value="">{t('transfers.select_beneficiary')}</option>
                 {beneficiaries.map((b: any) => (
                   <option key={b.id} value={b.id}>{b.name} - {b.iban}</option>
                 ))}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Montant (EUR)</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('transfers.amount')}</label>
               <input type="number" step="0.01" min="0.01" value={amount} onChange={e => setAmount(e.target.value)} required
                 placeholder="0.00"
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Motif</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('transfers.reason')}</label>
               <input type="text" value={description} onChange={e => setDescription(e.target.value)}
-                placeholder="Motif du virement"
+                placeholder={t('transfers.reason_placeholder')}
                 className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 px-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" />
             </div>
             <button type="submit" disabled={transferLoading}
               className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50 flex items-center justify-center gap-2">
               <Send className="w-4 h-4" />
-              {transferLoading ? 'Envoi...' : 'Effectuer le virement'}
+              {transferLoading ? t('transfers.sending') : t('transfers.send_transfer')}
             </button>
           </form>
         </div>
       ) : (
         <div>
           <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-white">Bénéficiaires enregistrés</h2>
+            <h2 className="text-lg font-semibold text-white">{t('transfers.saved_beneficiaries')}</h2>
             <button onClick={() => setShowAddBeneficiary(!showAddBeneficiary)}
               className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors">
               <UserPlus className="w-4 h-4" />
-              Ajouter
+              {t('transfers.add')}
             </button>
           </div>
 
           {showAddBeneficiary && (
             <div className="bg-slate-900 border border-slate-800 rounded-xl p-5 mb-4">
               <form onSubmit={handleAddBeneficiary} className="grid grid-cols-1 md:grid-cols-3 gap-3">
-                <input type="text" value={newBenName} onChange={e => setNewBenName(e.target.value)} required placeholder="Nom"
+                <input type="text" value={newBenName} onChange={e => setNewBenName(e.target.value)} required placeholder={t('transfers.name')}
                   className="bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" />
                 <input type="text" value={newBenIban} onChange={e => setNewBenIban(e.target.value)} required placeholder="IBAN"
                   className="bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" />
                 <div className="flex gap-2">
                   <input type="text" value={newBenBic} onChange={e => setNewBenBic(e.target.value)} required placeholder="BIC"
                     className="flex-1 bg-slate-800 border border-slate-700 rounded-xl py-2.5 px-4 text-sm text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500" />
-                  <button type="submit" className="px-4 py-2.5 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors">Ajouter</button>
+                  <button type="submit" className="px-4 py-2.5 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors">{t('transfers.add')}</button>
                 </div>
               </form>
             </div>
@@ -169,7 +173,7 @@ export function TransfersPage() {
 
           <div className="bg-slate-900 border border-slate-800 rounded-xl divide-y divide-slate-800">
             {beneficiaries.length === 0 ? (
-              <p className="text-center text-slate-500 py-8">Aucun bénéficiaire</p>
+              <p className="text-center text-slate-500 py-8">{t('transfers.no_beneficiaries')}</p>
             ) : beneficiaries.map((b: any) => (
               <div key={b.id} className="flex items-center justify-between p-4">
                 <div>

@@ -1,8 +1,12 @@
 import { useState, useEffect } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
-import { CheckCircle, XCircle, Filter } from 'lucide-react';
+import { CheckCircle, XCircle } from 'lucide-react';
 
 export function LogsPage() {
+  const { t } = useTranslation();
+  const { formatDateTime } = useLocale();
   const [logs, setLogs] = useState<any[]>([]);
   const [total, setTotal] = useState(0);
   const [page, setPage] = useState(1);
@@ -26,54 +30,54 @@ export function LogsPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-gray-900 mb-6">Journal d'activité</h1>
+      <h1 className="text-2xl font-bold text-wl-dark mb-6">{t('logs.title')}</h1>
 
       {/* Filters */}
       <div className="flex gap-3 mb-4">
         <select value={actionFilter} onChange={e => { setActionFilter(e.target.value); setPage(1); }}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <option value="">Toutes les actions</option>
-          <option value="auth.login.success">Login réussi</option>
-          <option value="auth.login.failure">Login échoué</option>
-          <option value="fido.registration.success">Enregistrement passkey</option>
-          <option value="fido.authentication.success">Auth passkey réussie</option>
-          <option value="fido.authentication.failure">Auth passkey échouée</option>
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wl-teal">
+          <option value="">{t('logs.all_actions')}</option>
+          <option value="auth.login.success">{t('logs.login_success')}</option>
+          <option value="auth.login.failure">{t('logs.login_failure')}</option>
+          <option value="fido.registration.success">{t('logs.passkey_registration')}</option>
+          <option value="fido.authentication.success">{t('logs.passkey_auth_success')}</option>
+          <option value="fido.authentication.failure">{t('logs.passkey_auth_failure')}</option>
         </select>
         <select value={statusFilter} onChange={e => { setStatusFilter(e.target.value); setPage(1); }}
-          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <option value="">Tous les statuts</option>
-          <option value="success">Succès</option>
-          <option value="failure">Échec</option>
+          className="border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wl-teal">
+          <option value="">{t('logs.all_statuses')}</option>
+          <option value="success">{t('logs.success')}</option>
+          <option value="failure">{t('logs.failure')}</option>
         </select>
       </div>
 
-      <div className="bg-white border border-gray-200 rounded-xl overflow-hidden">
+      <div className="bg-white border border-gray-200 rounded-wl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-gray-50 border-b border-gray-200">
-              <th className="text-left px-5 py-3 font-medium text-gray-500">Date</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-500">Action</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-500">Utilisateur</th>
-              <th className="text-center px-5 py-3 font-medium text-gray-500">Statut</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-500">IP</th>
+              <th className="text-left px-5 py-3 font-medium text-wl-gray">{t('logs.col_date')}</th>
+              <th className="text-left px-5 py-3 font-medium text-wl-gray">{t('logs.col_action')}</th>
+              <th className="text-left px-5 py-3 font-medium text-wl-gray">{t('logs.col_user')}</th>
+              <th className="text-center px-5 py-3 font-medium text-wl-gray">{t('logs.col_status')}</th>
+              <th className="text-left px-5 py-3 font-medium text-wl-gray">{t('logs.col_ip')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100">
             {loading ? (
               <tr><td colSpan={5} className="text-center py-8">
-                <div className="animate-spin w-6 h-6 border-2 border-indigo-500 border-t-transparent rounded-full mx-auto" />
+                <div className="animate-spin w-6 h-6 border-2 border-wl-teal border-t-transparent rounded-full mx-auto" />
               </td></tr>
             ) : logs.length === 0 ? (
-              <tr><td colSpan={5} className="text-center py-8 text-gray-400">Aucun log</td></tr>
+              <tr><td colSpan={5} className="text-center py-8 text-wl-gray">{t('logs.no_logs')}</td></tr>
             ) : logs.map((log: any) => (
-              <tr key={log.id} className="hover:bg-gray-50 transition-colors">
-                <td className="px-5 py-3 text-gray-500 text-xs whitespace-nowrap">
-                  {new Date(log.created_at).toLocaleString('fr-FR')}
+              <tr key={log.id} className="hover:bg-wl-teal-light/30 transition-colors">
+                <td className="px-5 py-3 text-wl-gray text-xs whitespace-nowrap">
+                  {formatDateTime(log.created_at)}
                 </td>
                 <td className="px-5 py-3">
-                  <span className="font-mono text-xs bg-gray-100 text-gray-700 px-2 py-0.5 rounded">{log.action}</span>
+                  <span className="font-mono text-xs bg-gray-100 text-wl-dark px-2 py-0.5 rounded">{log.action}</span>
                 </td>
-                <td className="px-5 py-3 text-gray-600">
+                <td className="px-5 py-3 text-wl-gray-dark">
                   {log.user_email ? `${log.user_first_name} ${log.user_last_name}` : '—'}
                 </td>
                 <td className="px-5 py-3 text-center">
@@ -81,7 +85,7 @@ export function LogsPage() {
                     ? <CheckCircle className="w-4 h-4 text-green-500 mx-auto" />
                     : <XCircle className="w-4 h-4 text-red-500 mx-auto" />}
                 </td>
-                <td className="px-5 py-3 text-gray-400 text-xs font-mono">{log.ip_address || '—'}</td>
+                <td className="px-5 py-3 text-wl-gray text-xs font-mono">{log.ip_address || '—'}</td>
               </tr>
             ))}
           </tbody>
@@ -90,16 +94,16 @@ export function LogsPage() {
 
       {totalPages > 1 && (
         <div className="flex items-center justify-between mt-4">
-          <p className="text-sm text-gray-500">{total} entrée{total > 1 ? 's' : ''}</p>
+          <p className="text-sm text-wl-gray">{total > 1 ? t('logs.entry_count_plural', { count: total }) : t('logs.entry_count', { count: total })}</p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}
-              className="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded-lg disabled:opacity-50 hover:bg-gray-50">
-              Précédent
+              className="px-3 py-1.5 text-sm border border-gray-300 text-wl-gray-dark rounded-lg disabled:opacity-50 hover:bg-gray-50">
+              {t('logs.previous')}
             </button>
-            <span className="px-3 py-1.5 text-sm text-gray-500">{page} / {totalPages}</span>
+            <span className="px-3 py-1.5 text-sm text-wl-gray">{page} / {totalPages}</span>
             <button onClick={() => setPage(p => Math.min(totalPages, p + 1))} disabled={page === totalPages}
-              className="px-3 py-1.5 text-sm border border-gray-300 text-gray-600 rounded-lg disabled:opacity-50 hover:bg-gray-50">
-              Suivant
+              className="px-3 py-1.5 text-sm border border-gray-300 text-wl-gray-dark rounded-lg disabled:opacity-50 hover:bg-gray-50">
+              {t('logs.next')}
             </button>
           </div>
         </div>

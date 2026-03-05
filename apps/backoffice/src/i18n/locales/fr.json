@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "FIDO Backoffice",
+    "subtitle": "Administration du serveur FIDO",
+    "powered_by": "Powered by Worldline",
+    "logging_in": "Connexion...",
+    "submit": "Se connecter",
+    "admin_required": "Acc\u00e8s admin requis"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Utilisateurs",
+    "logs": "Logs",
+    "health": "Sant\u00e9",
+    "logout": "D\u00e9connexion"
+  },
+  "dashboard": {
+    "title": "Dashboard FIDO",
+    "users": "Utilisateurs",
+    "passkeys": "Passkeys",
+    "authentications": "Authentifications",
+    "success_rate": "Taux de succ\u00e8s",
+    "activity_title": "Activit\u00e9 FIDO (30 jours)",
+    "registrations": "Enregistrements",
+    "chart_authentications": "Authentifications",
+    "device_types": "Types d'appareils",
+    "no_data": "Aucune donn\u00e9e"
+  },
+  "users": {
+    "title": "Utilisateurs",
+    "col_user": "Utilisateur",
+    "col_email": "Email",
+    "col_role": "R\u00f4le",
+    "col_passkeys": "Passkeys",
+    "col_registration": "Inscription"
+  },
+  "logs": {
+    "title": "Journal d'activit\u00e9",
+    "all_actions": "Toutes les actions",
+    "login_success": "Login r\u00e9ussi",
+    "login_failure": "Login \u00e9chou\u00e9",
+    "passkey_registration": "Enregistrement passkey",
+    "passkey_auth_success": "Auth passkey r\u00e9ussie",
+    "passkey_auth_failure": "Auth passkey \u00e9chou\u00e9e",
+    "all_statuses": "Tous les statuts",
+    "success": "Succ\u00e8s",
+    "failure": "\u00c9chec",
+    "col_date": "Date",
+    "col_action": "Action",
+    "col_user": "Utilisateur",
+    "col_status": "Statut",
+    "col_ip": "IP",
+    "no_logs": "Aucun log",
+    "entry_count": "{{count}} entr\u00e9e",
+    "entry_count_plural": "{{count}} entr\u00e9es",
+    "previous": "Pr\u00e9c\u00e9dent",
+    "next": "Suivant"
+  },
+  "health": {
+    "title": "Sant\u00e9 du serveur",
+    "refresh": "Rafra\u00eechir",
+    "general_status": "Statut g\u00e9n\u00e9ral",
+    "uptime": "Uptime",
+    "database": "Base de donn\u00e9es",
+    "connection": "Connexion",
+    "connected": "Connect\u00e9e",
+    "disconnected": "D\u00e9connect\u00e9e",
+    "latency": "Latence",
+    "memory": "M\u00e9moire",
+    "used": "Utilis\u00e9e"
+  }
+}

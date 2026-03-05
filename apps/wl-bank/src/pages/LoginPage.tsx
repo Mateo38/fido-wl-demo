@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useFido } from '../hooks/useFido';
+import { useTranslation } from 'react-i18next';
 import { Shield, Fingerprint, Mail, Lock, AlertCircle } from 'lucide-react';
 
 const HERO_IMAGE = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=1920&q=80&auto=format&fit=crop';
@@ -15,6 +16,7 @@ export function LoginPage() {
   const { login } = useAuth();
   const { authenticateWithPasskey, registerPasskey, loading: fidoLoading, error: fidoError } = useFido();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,7 +30,7 @@ export function LoginPage() {
         navigate('/');
       }
     } catch (err: any) {
-      setError(err.message || 'Identifiants incorrects');
+      setError(err.message || t('login.invalid_credentials'));
     } finally {
       setLoginLoading(false);
     }
@@ -59,7 +61,7 @@ export function LoginPage() {
               <Shield className="w-8 h-8 text-white" />
               <span className="text-2xl font-bold text-white">WL Bank</span>
             </div>
-            <p className="text-white/80 text-lg">Sécurisez votre compte avec une passkey biométrique.</p>
+            <p className="text-white/80 text-lg">{t('login.passkey_hero')}</p>
           </div>
         </div>
 
@@ -69,9 +71,9 @@ export function LoginPage() {
             <div className="w-16 h-16 bg-violet-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
               <Fingerprint className="w-8 h-8 text-violet-500" />
             </div>
-            <h2 className="text-2xl font-bold text-white mb-2">Sécurisez votre compte</h2>
+            <h2 className="text-2xl font-bold text-white mb-2">{t('login.passkey_title')}</h2>
             <p className="text-slate-400 mb-8">
-              Enregistrez une passkey pour vous connecter plus rapidement et en toute sécurité avec votre empreinte digitale ou Face ID.
+              {t('login.passkey_description')}
             </p>
             {fidoError && (
               <div className="bg-red-500/10 border border-red-500/20 rounded-lg p-3 mb-4 text-sm text-red-400">
@@ -83,13 +85,13 @@ export function LoginPage() {
               disabled={fidoLoading}
               className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50 mb-3"
             >
-              {fidoLoading ? 'Enregistrement...' : 'Enregistrer une passkey'}
+              {fidoLoading ? t('login.registering') : t('login.register_passkey')}
             </button>
             <button
               onClick={skipPasskey}
               className="w-full text-slate-400 hover:text-white font-medium py-3 px-4 rounded-xl transition-colors"
             >
-              Plus tard
+              {t('login.later')}
             </button>
           </div>
         </div>
@@ -108,11 +110,11 @@ export function LoginPage() {
             <Shield className="w-8 h-8 text-white" />
             <span className="text-2xl font-bold text-white">WL Bank</span>
           </div>
-          <h1 className="text-4xl font-bold text-white mb-3 leading-tight">
-            Votre argent,<br />sans limites.
+          <h1 className="text-4xl font-bold text-white mb-3 leading-tight" style={{ whiteSpace: 'pre-line' }}>
+            {t('login.hero_title')}
           </h1>
           <p className="text-white/70 text-lg max-w-md">
-            Gérez vos finances en toute simplicité. Connectez-vous avec une passkey pour une sécurité maximale.
+            {t('login.hero_subtitle')}
           </p>
         </div>
       </div>
@@ -126,7 +128,7 @@ export function LoginPage() {
               <Shield className="w-10 h-10 text-violet-500" />
               <span className="text-2xl font-bold text-white">WL Bank</span>
             </div>
-            <p className="text-slate-400">Connectez-vous à votre espace bancaire</p>
+            <p className="text-slate-400">{t('login.connect_to_space')}</p>
           </div>
 
           {error && (
@@ -143,7 +145,7 @@ export function LoginPage() {
 
           <form onSubmit={handleLogin} className="space-y-4 mb-6">
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Email</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('login.email')}</label>
               <div className="relative">
                 <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -158,7 +160,7 @@ export function LoginPage() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-slate-300 mb-1.5">Mot de passe</label>
+              <label className="block text-sm font-medium text-slate-300 mb-1.5">{t('login.password')}</label>
               <div className="relative">
                 <Lock className="absolute left-3 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
                 <input
@@ -177,7 +179,7 @@ export function LoginPage() {
               disabled={loginLoading}
               className="w-full bg-violet-600 hover:bg-violet-700 text-white font-medium py-3 px-4 rounded-xl transition-colors disabled:opacity-50"
             >
-              {loginLoading ? 'Connexion...' : 'Se connecter'}
+              {loginLoading ? t('login.logging_in') : t('login.submit')}
             </button>
           </form>
 
@@ -186,7 +188,7 @@ export function LoginPage() {
               <div className="w-full border-t border-slate-800" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="px-4 bg-slate-950 text-slate-500">ou</span>
+              <span className="px-4 bg-slate-950 text-slate-500">{t('login.or')}</span>
             </div>
           </div>
 
@@ -196,7 +198,7 @@ export function LoginPage() {
             className="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium py-3 px-4 rounded-xl transition-colors flex items-center justify-center gap-2 disabled:opacity-50"
           >
             <Fingerprint className="w-5 h-5 text-violet-400" />
-            {fidoLoading ? 'Vérification...' : 'Se connecter avec une passkey'}
+            {fidoLoading ? t('login.verifying') : t('login.passkey_login')}
           </button>
         </div>
       </div>
