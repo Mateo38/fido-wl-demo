@@ -10,21 +10,26 @@ const languages = [
 export function LanguageSelector({ variant = 'sidebar' }: { variant?: 'sidebar' | 'login' }) {
   const { i18n } = useTranslation();
 
-  const className = variant === 'login'
-    ? 'w-full bg-gray-800 border border-gray-700 rounded-lg px-3 py-2 text-sm text-gray-300 focus:outline-none focus:ring-2 focus:ring-wl-teal appearance-none cursor-pointer'
-    : 'w-full bg-white/10 border border-white/10 rounded-lg px-3 py-2 text-sm text-white/70 focus:outline-none focus:ring-2 focus:ring-wl-teal appearance-none cursor-pointer';
-
   return (
-    <select
-      value={i18n.language}
-      onChange={(e) => i18n.changeLanguage(e.target.value)}
-      className={className}
-    >
+    <div className="flex gap-1">
       {languages.map(({ code, flag, label }) => (
-        <option key={code} value={code} className="bg-gray-900 text-white">
-          {flag} {label}
-        </option>
+        <button
+          key={code}
+          onClick={() => i18n.changeLanguage(code)}
+          className={`flex items-center gap-1 px-2.5 py-1.5 rounded-lg text-xs font-medium transition-colors ${
+            i18n.language === code
+              ? variant === 'login'
+                ? 'bg-wl-teal/20 text-wl-teal border border-wl-teal/30'
+                : 'bg-wl-teal/20 text-wl-teal'
+              : variant === 'login'
+                ? 'text-gray-500 hover:text-gray-300 hover:bg-gray-800'
+                : 'text-white/40 hover:text-white hover:bg-white/10'
+          }`}
+        >
+          <span className="text-base leading-none">{flag}</span>
+          {label}
+        </button>
       ))}
-    </select>
+    </div>
   );
 }
