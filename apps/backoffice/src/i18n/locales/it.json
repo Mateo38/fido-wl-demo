@@ -1,0 +1,72 @@
+{
+  "login": {
+    "title": "FIDO Backoffice",
+    "subtitle": "Amministrazione del server FIDO",
+    "powered_by": "Powered by Worldline",
+    "logging_in": "Accesso...",
+    "submit": "Accedi",
+    "admin_required": "Accesso admin richiesto"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "users": "Utenti",
+    "logs": "Registri",
+    "health": "Stato",
+    "logout": "Disconnetti"
+  },
+  "dashboard": {
+    "title": "Dashboard FIDO",
+    "users": "Utenti",
+    "passkeys": "Passkeys",
+    "authentications": "Autenticazioni",
+    "success_rate": "Tasso di successo",
+    "activity_title": "Attivit\u00e0 FIDO (30 giorni)",
+    "registrations": "Registrazioni",
+    "chart_authentications": "Autenticazioni",
+    "device_types": "Tipi di dispositivi",
+    "no_data": "Nessun dato"
+  },
+  "users": {
+    "title": "Utenti",
+    "col_user": "Utente",
+    "col_email": "Email",
+    "col_role": "Ruolo",
+    "col_passkeys": "Passkeys",
+    "col_registration": "Registrazione"
+  },
+  "logs": {
+    "title": "Registro attivit\u00e0",
+    "all_actions": "Tutte le azioni",
+    "login_success": "Login riuscito",
+    "login_failure": "Login fallito",
+    "passkey_registration": "Registrazione passkey",
+    "passkey_auth_success": "Auth passkey riuscita",
+    "passkey_auth_failure": "Auth passkey fallita",
+    "all_statuses": "Tutti gli stati",
+    "success": "Successo",
+    "failure": "Errore",
+    "col_date": "Data",
+    "col_action": "Azione",
+    "col_user": "Utente",
+    "col_status": "Stato",
+    "col_ip": "IP",
+    "no_logs": "Nessun registro",
+    "entry_count": "{{count}} voce",
+    "entry_count_plural": "{{count}} voci",
+    "previous": "Precedente",
+    "next": "Successivo"
+  },
+  "health": {
+    "title": "Stato del server",
+    "refresh": "Aggiorna",
+    "general_status": "Stato generale",
+    "uptime": "Uptime",
+    "database": "Database",
+    "connection": "Connessione",
+    "connected": "Connesso",
+    "disconnected": "Disconnesso",
+    "latency": "Latenza",
+    "memory": "Memoria",
+    "used": "Utilizzata"
+  }
+}

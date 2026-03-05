@@ -4,12 +4,14 @@ import fr from './locales/fr.json';
 import en from './locales/en.json';
 import de from './locales/de.json';
 import nl from './locales/nl.json';
+import it from './locales/it.json';
 
 export const LOCALE_MAP: Record<string, string> = {
   fr: 'fr-FR',
   en: 'en-GB',
   de: 'de-DE',
   nl: 'nl-NL',
+  it: 'it-IT',
 };
 
 const savedLang = localStorage.getItem('wl-bank-lang') || 'fr';
@@ -20,6 +22,7 @@ i18n.use(initReactI18next).init({
     en: { translation: en },
     de: { translation: de },
     nl: { translation: nl },
+    it: { translation: it },
   },
   lng: savedLang,
   fallbackLng: 'fr',

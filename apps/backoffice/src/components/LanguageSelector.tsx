@@ -7,6 +7,7 @@ const languages = [
   { code: 'en', label: 'EN' },
   { code: 'de', label: 'DE' },
   { code: 'nl', label: 'NL' },
+  { code: 'it', label: 'IT' },
 ];
 
 function Flag({ code, className = 'w-5 h-4' }: { code: string; className?: string }) {
@@ -39,6 +40,13 @@ function Flag({ code, className = 'w-5 h-4' }: { code: string; className?: strin
         <rect width="640" height="160" fill="#AE1C28" />
         <rect y="160" width="640" height="160" fill="#fff" />
         <rect y="320" width="640" height="160" fill="#21468B" />
+      </svg>
+    ),
+    it: (
+      <svg viewBox="0 0 640 480" className={className}>
+        <rect width="213.3" height="480" fill="#009246" />
+        <rect x="213.3" width="213.4" height="480" fill="#fff" />
+        <rect x="426.7" width="213.3" height="480" fill="#CE2B37" />
       </svg>
     ),
   };
