@@ -53,6 +53,8 @@
     "block": "Blocca",
     "activate": "Attiva",
     "delete": "Elimina",
+    "reset_password": "Reimposta password",
+    "confirm_reset_password": "Reimpostare la password di {{name}}? Il cliente dovrà cambiare la password al prossimo accesso.",
     "confirm_delete": "Eliminare il cliente {{name}}? Questa azione è irreversibile.",
     "no_clients": "Nessun cliente",
     "first_name": "Nome",

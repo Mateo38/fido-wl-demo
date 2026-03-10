@@ -76,6 +76,7 @@ router.post('/login', async (req: Request, res: Response) => {
           first_name: user.first_name,
           last_name: user.last_name,
           role: user.role,
+          must_change_password: user.must_change_password,
           created_at: user.created_at,
           updated_at: user.updated_at,
         },
@@ -101,12 +102,31 @@ router.get('/me', authenticateToken, async (req: Request, res: Response) => {
         first_name: user.first_name,
         last_name: user.last_name,
         role: user.role,
+        must_change_password: user.must_change_password,
         created_at: user.created_at,
         updated_at: user.updated_at,
       },
     });
   } catch (err) {
     console.error('Me error:', err);
+    res.status(500).json({ success: false, error: 'Internal server error' });
+  }
+});
+
+router.post('/change-password', authenticateToken, async (req: Request, res: Response) => {
+  try {
+    const { new_password } = req.body;
+
+    if (!new_password || new_password.length < 8) {
+      return res.status(400).json({ success: false, error: 'Password must be at least 8 characters' });
+    }
+
+    const password_hash = await bcrypt.hash(new_password, 10);
+    await userRepository.updatePassword(req.user!.userId, password_hash, false);
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Change password error:', err);
     res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });

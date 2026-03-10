@@ -1,20 +1,14 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
-import crypto from 'crypto';
 import { authenticateToken, requireAdmin } from '../middleware/auth';
 import { userRepository } from '../repositories/userRepository';
 import { activityRepository } from '../repositories/activityRepository';
-import { sendWelcomeEmail } from '../services/emailService';
 
 const router = Router();
 
 router.use(authenticateToken, requireAdmin);
 
-function generatePassword(length = 10): string {
-  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnpqrstuvwxyz23456789!@#$';
-  const bytes = crypto.randomBytes(length);
-  return Array.from(bytes).map(b => chars[b % chars.length]).join('');
-}
+const DEFAULT_PASSWORD = 'azerty123';
 
 // List clients
 router.get('/', async (_req: Request, res: Response) => {
@@ -53,8 +47,7 @@ router.post('/', async (req: Request, res: Response) => {
       return res.status(409).json({ success: false, error: 'Email already exists' });
     }
 
-    const defaultPassword = generatePassword(10);
-    const password_hash = await bcrypt.hash(defaultPassword, 10);
+    const password_hash = await bcrypt.hash(DEFAULT_PASSWORD, 10);
 
     const user = await userRepository.create({
       email,
@@ -64,9 +57,8 @@ router.post('/', async (req: Request, res: Response) => {
       role: 'customer',
       status: 'active',
       phone,
+      must_change_password: true,
     });
-
-    await sendWelcomeEmail(email, first_name, defaultPassword);
 
     await activityRepository.create({
       user_id: req.user!.userId,
@@ -124,6 +116,33 @@ router.patch('/:id/status', async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Update client status error:', err);
     res.status(500).json({ success: false, error: 'Failed to update client status' });
+  }
+});
+
+// Reset client password
+router.patch('/:id/reset-password', async (req: Request, res: Response) => {
+  try {
+    const user = await userRepository.findById(req.params.id);
+    if (!user || user.role !== 'customer') {
+      return res.status(404).json({ success: false, error: 'Client not found' });
+    }
+
+    const password_hash = await bcrypt.hash(DEFAULT_PASSWORD, 10);
+    await userRepository.updatePassword(req.params.id, password_hash, true);
+
+    await activityRepository.create({
+      user_id: req.user!.userId,
+      action: 'client.password_reset',
+      status: 'success',
+      ip_address: req.ip,
+      user_agent: req.headers['user-agent'],
+      details: { client_id: req.params.id, client_email: user.email },
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Reset client password error:', err);
+    res.status(500).json({ success: false, error: 'Failed to reset password' });
   }
 });
 

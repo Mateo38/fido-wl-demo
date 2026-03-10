@@ -53,6 +53,8 @@
     "block": "Blokkeren",
     "activate": "Activeren",
     "delete": "Verwijderen",
+    "reset_password": "Wachtwoord resetten",
+    "confirm_reset_password": "Wachtwoord van {{name}} resetten? De klant moet zijn wachtwoord wijzigen bij de volgende aanmelding.",
     "confirm_delete": "Klant {{name}} verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
     "no_clients": "Geen klanten",
     "first_name": "Voornaam",

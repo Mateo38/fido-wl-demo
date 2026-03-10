@@ -9,6 +9,7 @@ export interface UserRow {
   role: string;
   status: string;
   phone: string | null;
+  must_change_password: boolean;
   created_at: Date;
   updated_at: Date;
 }
@@ -59,14 +60,22 @@ export const userRepository = {
     return rows;
   },
 
-  async create(data: { email: string; password_hash: string; first_name: string; last_name: string; role: string; status: string; phone?: string }) {
+  async create(data: { email: string; password_hash: string; first_name: string; last_name: string; role: string; status: string; phone?: string; must_change_password?: boolean }) {
     const { rows } = await pool.query(
-      `INSERT INTO users (email, password_hash, first_name, last_name, role, status, phone)
-       VALUES ($1, $2, $3, $4, $5, $6, $7)
+      `INSERT INTO users (email, password_hash, first_name, last_name, role, status, phone, must_change_password)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
        RETURNING *`,
-      [data.email, data.password_hash, data.first_name, data.last_name, data.role, data.status, data.phone || null]
+      [data.email, data.password_hash, data.first_name, data.last_name, data.role, data.status, data.phone || null, data.must_change_password ?? false]
     );
     return rows[0] as UserRow;
+  },
+
+  async updatePassword(id: string, password_hash: string, must_change_password = false) {
+    const { rows } = await pool.query(
+      'UPDATE users SET password_hash = $1, must_change_password = $2, updated_at = NOW() WHERE id = $3 RETURNING *',
+      [password_hash, must_change_password, id]
+    );
+    return rows[0] as UserRow | undefined;
   },
 
   async updateStatus(id: string, status: string) {

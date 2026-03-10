@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
-import { Key, Plus, Ban, CheckCircle, Trash2, X, Phone } from 'lucide-react';
+import { Key, Plus, Ban, CheckCircle, Trash2, X, Phone, RotateCcw } from 'lucide-react';
 
 interface Client {
   id: string;
@@ -58,6 +58,12 @@ export function ClientsPage() {
   const handleToggleStatus = async (client: Client) => {
     const newStatus = client.status === 'active' ? 'blocked' : 'active';
     await api.updateClientStatus(client.id, newStatus);
+    loadClients();
+  };
+
+  const handleResetPassword = async (client: Client) => {
+    if (!confirm(t('clients.confirm_reset_password', { name: `${client.first_name} ${client.last_name}` }))) return;
+    await api.resetClientPassword(client.id);
     loadClients();
   };
 
@@ -144,6 +150,10 @@ export function ClientsPage() {
                         c.status === 'active' ? 'text-gray-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10'
                       }`}>
                       {c.status === 'active' ? <Ban className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                    </button>
+                    <button onClick={() => handleResetPassword(c)} title={t('clients.reset_password')}
+                      className="p-1.5 rounded-lg text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+                      <RotateCcw className="w-4 h-4" />
                     </button>
                     <button onClick={() => handleDelete(c)} title={t('clients.delete')}
                       className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">

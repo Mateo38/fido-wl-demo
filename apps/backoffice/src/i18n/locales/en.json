@@ -53,6 +53,8 @@
     "block": "Block",
     "activate": "Activate",
     "delete": "Delete",
+    "reset_password": "Reset password",
+    "confirm_reset_password": "Reset password for {{name}}? The client will need to change their password on next login.",
     "confirm_delete": "Delete client {{name}}? This action cannot be undone.",
     "no_clients": "No clients",
     "first_name": "First name",

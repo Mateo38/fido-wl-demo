@@ -32,6 +32,8 @@ export const api = {
     request<any>('/clients', { method: 'POST', body: JSON.stringify(data) }),
   updateClientStatus: (id: string, status: 'active' | 'blocked') =>
     request<any>(`/clients/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  resetClientPassword: (id: string) =>
+    request<any>(`/clients/${id}/reset-password`, { method: 'PATCH' }),
   deleteClient: (id: string) =>
     request<any>(`/clients/${id}`, { method: 'DELETE' }),
 };

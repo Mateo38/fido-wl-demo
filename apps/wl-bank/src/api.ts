@@ -25,6 +25,11 @@ export const api = {
       body: JSON.stringify({ email, password }),
     }),
   me: () => request<any>('/auth/me'),
+  changePassword: (new_password: string) =>
+    request<any>('/auth/change-password', {
+      method: 'POST',
+      body: JSON.stringify({ new_password }),
+    }),
 
   // FIDO
   fidoRegistrationOptions: () =>

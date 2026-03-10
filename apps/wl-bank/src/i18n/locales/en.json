@@ -26,6 +26,16 @@
     "register_passkey": "Register a passkey",
     "later": "Later"
   },
+  "change_password": {
+    "title": "Password change required",
+    "description": "For security reasons, you must set a new password before continuing.",
+    "new_password": "New password",
+    "confirm_password": "Confirm password",
+    "min_length": "Password must be at least 8 characters",
+    "mismatch": "Passwords do not match",
+    "saving": "Saving...",
+    "submit": "Change password"
+  },
   "dashboard": {
     "greeting": "Hello, {{name}}",
     "overview": "Here's an overview of your finances",

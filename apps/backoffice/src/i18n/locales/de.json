@@ -53,6 +53,8 @@
     "block": "Sperren",
     "activate": "Aktivieren",
     "delete": "Löschen",
+    "reset_password": "Passwort zurücksetzen",
+    "confirm_reset_password": "Passwort von {{name}} zurücksetzen? Der Kunde muss sein Passwort bei der nächsten Anmeldung ändern.",
     "confirm_delete": "Kunde {{name}} löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
     "no_clients": "Keine Kunden",
     "first_name": "Vorname",

@@ -26,6 +26,16 @@
     "register_passkey": "Passkey registreren",
     "later": "Later"
   },
+  "change_password": {
+    "title": "Wachtwoord wijzigen vereist",
+    "description": "Om veiligheidsredenen moet u een nieuw wachtwoord instellen voordat u verdergaat.",
+    "new_password": "Nieuw wachtwoord",
+    "confirm_password": "Wachtwoord bevestigen",
+    "min_length": "Wachtwoord moet minimaal 8 tekens bevatten",
+    "mismatch": "Wachtwoorden komen niet overeen",
+    "saving": "Opslaan...",
+    "submit": "Wachtwoord wijzigen"
+  },
   "dashboard": {
     "greeting": "Hallo, {{name}}",
     "overview": "Hier is een overzicht van uw financi\u00ebn",

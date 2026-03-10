@@ -26,6 +26,16 @@
     "register_passkey": "Passkey registrieren",
     "later": "Sp\u00e4ter"
   },
+  "change_password": {
+    "title": "Passwort\u00e4nderung erforderlich",
+    "description": "Aus Sicherheitsgr\u00fcnden m\u00fcssen Sie ein neues Passwort festlegen, bevor Sie fortfahren.",
+    "new_password": "Neues Passwort",
+    "confirm_password": "Passwort best\u00e4tigen",
+    "min_length": "Das Passwort muss mindestens 8 Zeichen lang sein",
+    "mismatch": "Die Passw\u00f6rter stimmen nicht \u00fcberein",
+    "saving": "Speichern...",
+    "submit": "Passwort \u00e4ndern"
+  },
   "dashboard": {
     "greeting": "Hallo, {{name}}",
     "overview": "Hier ist eine \u00dcbersicht Ihrer Finanzen",

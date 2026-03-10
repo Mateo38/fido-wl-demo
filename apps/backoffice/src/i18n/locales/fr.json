@@ -53,6 +53,8 @@
     "block": "Bloquer",
     "activate": "Activer",
     "delete": "Supprimer",
+    "reset_password": "Réinitialiser le mot de passe",
+    "confirm_reset_password": "Réinitialiser le mot de passe de {{name}} ? Le client devra changer son mot de passe à la prochaine connexion.",
     "confirm_delete": "Supprimer le client {{name}} ? Cette action est irréversible.",
     "no_clients": "Aucun client",
     "first_name": "Prénom",
