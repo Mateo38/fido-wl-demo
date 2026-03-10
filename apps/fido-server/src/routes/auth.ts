@@ -27,6 +27,18 @@ router.post('/login', async (req: Request, res: Response) => {
       return res.status(401).json({ success: false, error: 'Invalid credentials' });
     }
 
+    if (user.status === 'blocked') {
+      await activityRepository.create({
+        user_id: user.id,
+        action: 'auth.login.failure',
+        status: 'failure',
+        ip_address: req.ip,
+        user_agent: req.headers['user-agent'],
+        details: { reason: 'account_blocked' },
+      });
+      return res.status(403).json({ success: false, error: 'account_blocked' });
+    }
+
     const validPassword = await bcrypt.compare(password, user.password_hash);
     if (!validPassword) {
       await activityRepository.create({

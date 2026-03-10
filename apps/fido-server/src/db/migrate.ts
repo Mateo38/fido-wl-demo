@@ -2,7 +2,7 @@ import fs from 'fs';
 import path from 'path';
 import pool from './pool';
 
-async function migrate() {
+export async function runMigrations() {
   const client = await pool.connect();
   try {
     // Ensure migrations table exists
@@ -21,10 +21,7 @@ async function migrate() {
       if (!file.endsWith('.sql')) continue;
 
       const { rows } = await client.query('SELECT id FROM migrations WHERE name = $1', [file]);
-      if (rows.length > 0) {
-        console.log(`Skipping ${file} (already executed)`);
-        continue;
-      }
+      if (rows.length > 0) continue;
 
       const sql = fs.readFileSync(path.join(migrationsDir, file), 'utf-8');
       await client.query('BEGIN');
@@ -32,21 +29,20 @@ async function migrate() {
         await client.query(sql);
         await client.query('INSERT INTO migrations (name) VALUES ($1)', [file]);
         await client.query('COMMIT');
-        console.log(`Executed ${file}`);
+        console.log(`Migration: executed ${file}`);
       } catch (err) {
         await client.query('ROLLBACK');
         throw err;
       }
     }
-
-    console.log('All migrations completed.');
   } finally {
     client.release();
-    await pool.end();
   }
 }
 
-migrate().catch((err) => {
-  console.error('Migration failed:', err);
-  process.exit(1);
-});
+// Run directly if called as script
+if (require.main === module) {
+  runMigrations()
+    .then(() => { console.log('All migrations completed.'); pool.end(); })
+    .catch((err) => { console.error('Migration failed:', err); process.exit(1); });
+}

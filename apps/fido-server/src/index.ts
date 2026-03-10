@@ -9,8 +9,10 @@ import authRoutes from './routes/auth';
 import fidoRoutes from './routes/fido';
 import bankingRoutes from './routes/banking';
 import adminRoutes from './routes/admin';
+import clientRoutes from './routes/clients';
 import healthRoutes from './routes/health';
 import { errorHandler } from './middleware/errorHandler';
+import { runMigrations } from './db/migrate';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -30,11 +32,19 @@ app.use('/api/auth', authRoutes);
 app.use('/api/fido', fidoRoutes);
 app.use('/api', bankingRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/clients', clientRoutes);
 app.use('/api', healthRoutes);
 
 // Error handler
 app.use(errorHandler);
 
-app.listen(PORT, () => {
-  console.log(`FIDO Server running on port ${PORT}`);
-});
+runMigrations()
+  .then(() => {
+    app.listen(PORT, () => {
+      console.log(`FIDO Server running on port ${PORT}`);
+    });
+  })
+  .catch((err) => {
+    console.error('Migration failed:', err);
+    process.exit(1);
+  });

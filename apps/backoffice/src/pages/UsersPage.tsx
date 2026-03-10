@@ -18,17 +18,17 @@ export function UsersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold text-white mb-6">{t('users.title')}</h1>
+      <h1 className="text-2xl font-bold text-white mb-6">{t('admins.title')}</h1>
 
       <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-hidden">
         <table className="w-full text-sm">
           <thead>
             <tr className="bg-gray-800/50 border-b border-gray-800">
-              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('users.col_user')}</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('users.col_email')}</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('users.col_role')}</th>
-              <th className="text-center px-5 py-3 font-medium text-gray-400">{t('users.col_passkeys')}</th>
-              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('users.col_registration')}</th>
+              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('admins.col_user')}</th>
+              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('admins.col_email')}</th>
+              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('admins.col_role')}</th>
+              <th className="text-center px-5 py-3 font-medium text-gray-400">{t('admins.col_passkeys')}</th>
+              <th className="text-left px-5 py-3 font-medium text-gray-400">{t('admins.col_registration')}</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-800">

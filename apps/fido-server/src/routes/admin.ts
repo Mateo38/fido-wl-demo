@@ -41,7 +41,7 @@ router.get('/dashboard', async (_req: Request, res: Response) => {
 // Users list
 router.get('/users', async (_req: Request, res: Response) => {
   try {
-    const users = await userRepository.findAll();
+    const users = await userRepository.findAllAdmins();
     res.json({
       success: true,
       data: users.map((u: any) => ({

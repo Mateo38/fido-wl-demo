@@ -9,7 +9,8 @@
   },
   "nav": {
     "dashboard": "Dashboard",
-    "users": "Gebruikers",
+    "clients": "Klanten",
+    "admins": "Beheerders",
     "logs": "Logboeken",
     "health": "Gezondheid",
     "logout": "Uitloggen"
@@ -26,13 +27,39 @@
     "device_types": "Apparaattypen",
     "no_data": "Geen gegevens"
   },
-  "users": {
-    "title": "Gebruikers",
+  "admins": {
+    "title": "Beheerders",
     "col_user": "Gebruiker",
     "col_email": "E-mail",
     "col_role": "Rol",
     "col_passkeys": "Passkeys",
     "col_registration": "Registratie"
+  },
+  "clients": {
+    "title": "Klanten",
+    "new_client": "Nieuwe klant",
+    "col_name": "Naam",
+    "col_email": "E-mail",
+    "col_phone": "Telefoon",
+    "col_status": "Status",
+    "col_passkeys": "Passkeys",
+    "col_created": "Aangemaakt",
+    "col_actions": "Acties",
+    "filter_all": "Alle",
+    "filter_active": "Actief",
+    "filter_blocked": "Geblokkeerd",
+    "status_active": "Actief",
+    "status_blocked": "Geblokkeerd",
+    "block": "Blokkeren",
+    "activate": "Activeren",
+    "delete": "Verwijderen",
+    "confirm_delete": "Klant {{name}} verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "no_clients": "Geen klanten",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
+    "optional": "optioneel",
+    "creating": "Aanmaken...",
+    "create": "Klant aanmaken"
   },
   "logs": {
     "title": "Activiteitenlogboek",

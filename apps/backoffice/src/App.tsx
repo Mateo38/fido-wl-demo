@@ -3,11 +3,12 @@ import { useState, useEffect, createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from './api';
 import { DashboardPage } from './pages/DashboardPage';
+import { ClientsPage } from './pages/ClientsPage';
 import { UsersPage } from './pages/UsersPage';
 import { LogsPage } from './pages/LogsPage';
 import { HealthPage } from './pages/HealthPage';
 import { LanguageSelector } from './components/LanguageSelector';
-import { LayoutDashboard, Users, ScrollText, Activity, LogOut, Lock, Mail } from 'lucide-react';
+import { LayoutDashboard, Users, ShieldCheck, ScrollText, Activity, LogOut, Lock, Mail } from 'lucide-react';
 
 interface AdminUser { id: string; email: string; first_name: string; last_name: string; role: string; }
 
@@ -85,7 +86,8 @@ function AdminLogin() {
 
 const navKeys = [
   { to: '/', icon: LayoutDashboard, key: 'nav.dashboard' },
-  { to: '/users', icon: Users, key: 'nav.users' },
+  { to: '/clients', icon: Users, key: 'nav.clients' },
+  { to: '/users', icon: ShieldCheck, key: 'nav.admins' },
   { to: '/logs', icon: ScrollText, key: 'nav.logs' },
   { to: '/health', icon: Activity, key: 'nav.health' },
 ];
@@ -130,6 +132,7 @@ function AdminLayout() {
       <main className="flex-1 overflow-auto p-6">
         <Routes>
           <Route index element={<DashboardPage />} />
+          <Route path="/clients" element={<ClientsPage />} />
           <Route path="/users" element={<UsersPage />} />
           <Route path="/logs" element={<LogsPage />} />
           <Route path="/health" element={<HealthPage />} />

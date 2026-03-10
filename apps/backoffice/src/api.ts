@@ -27,4 +27,11 @@ export const api = {
     return request<any>(`/admin/logs${qs}`);
   },
   getHealth: () => request<any>('/health'),
+  getClients: () => request<any>('/clients'),
+  createClient: (data: { email: string; first_name: string; last_name: string; phone?: string }) =>
+    request<any>('/clients', { method: 'POST', body: JSON.stringify(data) }),
+  updateClientStatus: (id: string, status: 'active' | 'blocked') =>
+    request<any>(`/clients/${id}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  deleteClient: (id: string) =>
+    request<any>(`/clients/${id}`, { method: 'DELETE' }),
 };

@@ -21,10 +21,10 @@ async function seed() {
 
     // Users
     const { rows: users } = await client.query(`
-      INSERT INTO users (id, email, password_hash, first_name, last_name, role) VALUES
-        ('11111111-1111-1111-1111-111111111111', 'marie.dupont@email.fr', $1, 'Marie', 'Dupont', 'customer'),
-        ('22222222-2222-2222-2222-222222222222', 'jean.martin@email.fr', $1, 'Jean', 'Martin', 'customer'),
-        ('33333333-3333-3333-3333-333333333333', 'sophie.bernard@wlbank.fr', $2, 'Sophie', 'Bernard', 'admin')
+      INSERT INTO users (id, email, password_hash, first_name, last_name, role, status) VALUES
+        ('11111111-1111-1111-1111-111111111111', 'marie.dupont@email.fr', $1, 'Marie', 'Dupont', 'customer', 'active'),
+        ('22222222-2222-2222-2222-222222222222', 'jean.martin@email.fr', $1, 'Jean', 'Martin', 'customer', 'active'),
+        ('33333333-3333-3333-3333-333333333333', 'sophie.bernard@wlbank.fr', $2, 'Sophie', 'Bernard', 'admin', 'active')
       RETURNING id, first_name, last_name
     `, [customerPasswordHash, adminPasswordHash]);
 
