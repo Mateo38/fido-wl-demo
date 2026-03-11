@@ -27,13 +27,31 @@
     "device_types": "Gerätetypen",
     "no_data": "Keine Daten"
   },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Administrator",
+    "supervisor": "Supervisor",
+    "operator": "Operator"
+  },
   "admins": {
     "title": "Administratoren",
     "col_user": "Benutzer",
     "col_email": "E-Mail",
     "col_role": "Rolle",
     "col_passkeys": "Passkeys",
-    "col_registration": "Registrierung"
+    "col_registration": "Registrierung",
+    "col_actions": "Aktionen",
+    "new_admin": "Neuer Administrator",
+    "create": "Administrator erstellen",
+    "creating": "Erstellen...",
+    "select_role": "Rolle",
+    "change_role": "Rolle ändern",
+    "confirm_delete": "Administrator {{name}} löschen? Diese Aktion kann nicht rückgängig gemacht werden.",
+    "confirm_reset_password": "Passwort von {{name}} zurücksetzen? Das Passwort wird auf azerty123 zurückgesetzt.",
+    "reset_password": "Passwort zurücksetzen",
+    "delete": "Löschen",
+    "default_password_notice": "Standardpasswort: azerty123 — Der Benutzer muss es bei der ersten Anmeldung ändern.",
+    "no_admins": "Keine Administratoren"
   },
   "clients": {
     "title": "Kunden",

@@ -53,11 +53,27 @@ export const userRepository = {
       SELECT u.*, COUNT(p.id)::int as passkey_count
       FROM users u
       LEFT JOIN passkeys p ON p.user_id = u.id
-      WHERE u.role = 'admin'
+      WHERE u.role IN ('super_admin', 'admin', 'supervisor', 'operator')
       GROUP BY u.id
       ORDER BY u.created_at DESC
     `);
     return rows;
+  },
+
+  async updateRole(id: string, role: string) {
+    const { rows } = await pool.query(
+      'UPDATE users SET role = $1, updated_at = NOW() WHERE id = $2 RETURNING *',
+      [role, id]
+    );
+    return rows[0] as UserRow | undefined;
+  },
+
+  async deleteAdmin(id: string) {
+    const { rowCount } = await pool.query(
+      "DELETE FROM users WHERE id = $1 AND role IN ('admin', 'supervisor', 'operator')",
+      [id]
+    );
+    return (rowCount ?? 0) > 0;
   },
 
   async create(data: { email: string; password_hash: string; first_name: string; last_name: string; role: string; status: string; phone?: string; must_change_password?: boolean }) {

@@ -2,6 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate, NavLink, useNavigate } from 're
 import { useState, useEffect, createContext, useContext } from 'react';
 import { useTranslation } from 'react-i18next';
 import { api } from './api';
+import { usePermissions } from './hooks/usePermissions';
 import { DashboardPage } from './pages/DashboardPage';
 import { ClientsPage } from './pages/ClientsPage';
 import { UsersPage } from './pages/UsersPage';
@@ -10,7 +11,16 @@ import { HealthPage } from './pages/HealthPage';
 import { LanguageSelector } from './components/LanguageSelector';
 import { LayoutDashboard, Users, ShieldCheck, ScrollText, Activity, LogOut, Lock, Mail } from 'lucide-react';
 
-interface AdminUser { id: string; email: string; first_name: string; last_name: string; role: string; }
+const ADMIN_ROLES = ['super_admin', 'admin', 'supervisor', 'operator'];
+
+const ROLE_LABELS: Record<string, string> = {
+  super_admin: 'Super Admin',
+  admin: 'Admin',
+  supervisor: 'Supervisor',
+  operator: 'Operator',
+};
+
+interface AdminUser { id: string; email: string; first_name: string; last_name: string; role: string; permissions?: string[]; }
 
 const AuthContext = createContext<{
   user: AdminUser | null;
@@ -18,7 +28,7 @@ const AuthContext = createContext<{
   logout: () => void;
 } | null>(null);
 
-function useAdminAuth() {
+export function useAdminAuth() {
   const ctx = useContext(AuthContext);
   if (!ctx) throw new Error('useAdminAuth must be used within AuthProvider');
   return ctx;
@@ -84,17 +94,24 @@ function AdminLogin() {
   );
 }
 
-const navKeys = [
-  { to: '/', icon: LayoutDashboard, key: 'nav.dashboard' },
-  { to: '/clients', icon: Users, key: 'nav.clients' },
-  { to: '/users', icon: ShieldCheck, key: 'nav.admins' },
-  { to: '/logs', icon: ScrollText, key: 'nav.logs' },
-  { to: '/health', icon: Activity, key: 'nav.health' },
+type NavItem = { to: string; icon: typeof LayoutDashboard; key: string; permission: string };
+
+const allNavItems: NavItem[] = [
+  { to: '/', icon: LayoutDashboard, key: 'nav.dashboard', permission: 'dashboard:read' },
+  { to: '/clients', icon: Users, key: 'nav.clients', permission: 'clients:read' },
+  { to: '/users', icon: ShieldCheck, key: 'nav.admins', permission: 'admins:read' },
+  { to: '/logs', icon: ScrollText, key: 'nav.logs', permission: 'logs:read' },
+  { to: '/health', icon: Activity, key: 'nav.health', permission: 'health:read' },
 ];
 
 function AdminLayout() {
   const { user, logout } = useAdminAuth();
   const { t } = useTranslation();
+  const { hasPermission } = usePermissions(user?.role);
+
+  const navItems = allNavItems.filter(item => hasPermission(item.permission as any));
+  const firstRoute = navItems[0]?.to || '/clients';
+
   return (
     <div className="flex h-screen bg-gray-950">
       <aside className="w-56 bg-wl-dark flex flex-col">
@@ -111,7 +128,7 @@ function AdminLayout() {
           </div>
         </div>
         <nav className="flex-1 p-3 space-y-0.5">
-          {navKeys.map(({ to, icon: Icon, key }) => (
+          {navItems.map(({ to, icon: Icon, key }) => (
             <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) =>
               `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-wl-teal text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
               <Icon className="w-4 h-4" />
@@ -120,7 +137,8 @@ function AdminLayout() {
           ))}
         </nav>
         <div className="p-3 border-t border-white/10">
-          <p className="text-xs text-white/40 px-3 mb-2">{user?.first_name} {user?.last_name}</p>
+          <p className="text-xs text-white/40 px-3">{user?.first_name} {user?.last_name}</p>
+          <p className="text-[10px] text-white/25 px-3 mb-2">{user?.role ? (t(`roles.${user.role}`, { defaultValue: ROLE_LABELS[user.role] || user.role })) : ''}</p>
           <div className="px-3 mb-2">
             <LanguageSelector variant="sidebar" />
           </div>
@@ -131,11 +149,12 @@ function AdminLayout() {
       </aside>
       <main className="flex-1 overflow-auto p-6">
         <Routes>
-          <Route index element={<DashboardPage />} />
-          <Route path="/clients" element={<ClientsPage />} />
-          <Route path="/users" element={<UsersPage />} />
-          <Route path="/logs" element={<LogsPage />} />
-          <Route path="/health" element={<HealthPage />} />
+          {hasPermission('dashboard:read') && <Route index element={<DashboardPage />} />}
+          {hasPermission('clients:read') && <Route path="/clients" element={<ClientsPage />} />}
+          {hasPermission('admins:read') && <Route path="/users" element={<UsersPage />} />}
+          {hasPermission('logs:read') && <Route path="/logs" element={<LogsPage />} />}
+          {hasPermission('health:read') && <Route path="/health" element={<HealthPage />} />}
+          <Route path="*" element={<Navigate to={firstRoute} replace />} />
         </Routes>
       </main>
     </div>
@@ -151,7 +170,7 @@ export default function App() {
     if (token) {
       fetch('/api/auth/me', { headers: { Authorization: `Bearer ${token}` } })
         .then(r => r.json())
-        .then(data => { if (data.success && data.data.role === 'admin') setUser(data.data); else localStorage.removeItem('admin_token'); })
+        .then(data => { if (data.success && ADMIN_ROLES.includes(data.data.role)) setUser(data.data); else localStorage.removeItem('admin_token'); })
         .catch(() => localStorage.removeItem('admin_token'))
         .finally(() => setLoading(false));
     } else {
@@ -161,7 +180,7 @@ export default function App() {
 
   const loginFn = async (email: string, password: string) => {
     const res = await api.login(email, password);
-    if (res.data.user.role !== 'admin') throw new Error('Admin access required');
+    if (!ADMIN_ROLES.includes(res.data.user.role)) throw new Error('Admin access required');
     localStorage.setItem('admin_token', res.data.token);
     setUser(res.data.user);
   };

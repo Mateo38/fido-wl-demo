@@ -18,15 +18,19 @@ async function seed() {
 
     const customerPasswordHash = await bcrypt.hash('Demo1234!', 10);
     const adminPasswordHash = await bcrypt.hash('Admin1234!', 10);
+    const superAdminPasswordHash = await bcrypt.hash('adminWL26', 10);
 
     // Users
     const { rows: users } = await client.query(`
       INSERT INTO users (id, email, password_hash, first_name, last_name, role, status) VALUES
         ('11111111-1111-1111-1111-111111111111', 'marie.dupont@email.fr', $1, 'Marie', 'Dupont', 'customer', 'active'),
         ('22222222-2222-2222-2222-222222222222', 'jean.martin@email.fr', $1, 'Jean', 'Martin', 'customer', 'active'),
-        ('33333333-3333-3333-3333-333333333333', 'sophie.bernard@wlbank.fr', $2, 'Sophie', 'Bernard', 'admin', 'active')
+        ('33333333-3333-3333-3333-333333333333', 'sophie.bernard@wlbank.fr', $2, 'Sophie', 'Bernard', 'admin', 'active'),
+        ('44444444-4444-4444-4444-444444444444', 'mathieu.barthelemy@wlbank.fr', $3, 'Mathieu', 'BARTHELEMY', 'super_admin', 'active'),
+        ('55555555-5555-5555-5555-555555555555', 'paul.lefevre@wlbank.fr', $2, 'Paul', 'Lefevre', 'supervisor', 'active'),
+        ('66666666-6666-6666-6666-666666666666', 'claire.moreau@wlbank.fr', $2, 'Claire', 'Moreau', 'operator', 'active')
       RETURNING id, first_name, last_name
-    `, [customerPasswordHash, adminPasswordHash]);
+    `, [customerPasswordHash, adminPasswordHash, superAdminPasswordHash]);
 
     console.log(`Created ${users.length} users`);
 
@@ -99,7 +103,10 @@ async function seed() {
     console.log('---');
     console.log('Customer login: marie.dupont@email.fr / Demo1234!');
     console.log('Customer login: jean.martin@email.fr / Demo1234!');
+    console.log('Super Admin login: mathieu.barthelemy@wlbank.fr / adminWL26');
     console.log('Admin login: sophie.bernard@wlbank.fr / Admin1234!');
+    console.log('Supervisor login: paul.lefevre@wlbank.fr / Admin1234!');
+    console.log('Operator login: claire.moreau@wlbank.fr / Admin1234!');
   } catch (err) {
     await client.query('ROLLBACK');
     throw err;
@@ -168,6 +175,9 @@ function generateActivityLogs(days: number) {
     '11111111-1111-1111-1111-111111111111',
     '22222222-2222-2222-2222-222222222222',
     '33333333-3333-3333-3333-333333333333',
+    '44444444-4444-4444-4444-444444444444',
+    '55555555-5555-5555-5555-555555555555',
+    '66666666-6666-6666-6666-666666666666',
   ];
 
   const actions = [

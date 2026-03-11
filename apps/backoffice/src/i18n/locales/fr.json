@@ -27,13 +27,31 @@
     "device_types": "Types d'appareils",
     "no_data": "Aucune donnée"
   },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Administrateur",
+    "supervisor": "Superviseur",
+    "operator": "Opérateur"
+  },
   "admins": {
     "title": "Administrateurs",
     "col_user": "Utilisateur",
     "col_email": "Email",
     "col_role": "Rôle",
     "col_passkeys": "Passkeys",
-    "col_registration": "Inscription"
+    "col_registration": "Inscription",
+    "col_actions": "Actions",
+    "new_admin": "Nouvel administrateur",
+    "create": "Créer l'administrateur",
+    "creating": "Création...",
+    "select_role": "Profil",
+    "change_role": "Changer le profil",
+    "confirm_delete": "Supprimer l'administrateur {{name}} ? Cette action est irréversible.",
+    "confirm_reset_password": "Réinitialiser le mot de passe de {{name}} ? Le mot de passe sera remis à azerty123.",
+    "reset_password": "Réinitialiser le mot de passe",
+    "delete": "Supprimer",
+    "default_password_notice": "Mot de passe par défaut : azerty123 — L'utilisateur devra le changer à la première connexion.",
+    "no_admins": "Aucun administrateur"
   },
   "clients": {
     "title": "Clients",

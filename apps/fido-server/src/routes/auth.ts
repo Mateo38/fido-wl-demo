@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import { userRepository } from '../repositories/userRepository';
-import { generateToken, authenticateToken } from '../middleware/auth';
+import { generateToken, authenticateToken, getPermissionsForRole } from '../middleware/auth';
 import { activityRepository } from '../repositories/activityRepository';
 
 const router = Router();
@@ -76,6 +76,7 @@ router.post('/login', async (req: Request, res: Response) => {
           first_name: user.first_name,
           last_name: user.last_name,
           role: user.role,
+          permissions: getPermissionsForRole(user.role),
           must_change_password: user.must_change_password,
           created_at: user.created_at,
           updated_at: user.updated_at,
@@ -102,6 +103,7 @@ router.get('/me', authenticateToken, async (req: Request, res: Response) => {
         first_name: user.first_name,
         last_name: user.last_name,
         role: user.role,
+        permissions: getPermissionsForRole(user.role),
         must_change_password: user.must_change_password,
         created_at: user.created_at,
         updated_at: user.updated_at,

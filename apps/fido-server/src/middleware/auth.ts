@@ -17,6 +17,28 @@ declare global {
 
 const JWT_SECRET = process.env.JWT_SECRET || 'dev-secret';
 
+export type Permission =
+  | 'dashboard:read'
+  | 'clients:read'
+  | 'clients:write'
+  | 'admins:read'
+  | 'admins:write'
+  | 'logs:read'
+  | 'health:read';
+
+const ADMIN_ROLES = ['super_admin', 'admin', 'supervisor', 'operator'];
+
+const ROLE_PERMISSIONS: Record<string, Permission[]> = {
+  super_admin: ['dashboard:read', 'clients:read', 'clients:write', 'admins:read', 'admins:write', 'logs:read', 'health:read'],
+  admin: ['dashboard:read', 'clients:read', 'clients:write', 'logs:read', 'health:read'],
+  supervisor: ['dashboard:read', 'clients:read', 'clients:write', 'logs:read', 'health:read'],
+  operator: ['clients:read', 'logs:read'],
+};
+
+export function getPermissionsForRole(role: string): Permission[] {
+  return ROLE_PERMISSIONS[role] || [];
+}
+
 export function generateToken(payload: JwtPayload): string {
   return jwt.sign(payload, JWT_SECRET, { expiresIn: '24h' });
 }
@@ -39,8 +61,29 @@ export function authenticateToken(req: Request, res: Response, next: NextFunctio
 }
 
 export function requireAdmin(req: Request, res: Response, next: NextFunction) {
-  if (!req.user || req.user.role !== 'admin') {
+  if (!req.user || !ADMIN_ROLES.includes(req.user.role)) {
     return res.status(403).json({ success: false, error: 'Admin access required' });
   }
   next();
+}
+
+export function requireSuperAdmin(req: Request, res: Response, next: NextFunction) {
+  if (!req.user || req.user.role !== 'super_admin') {
+    return res.status(403).json({ success: false, error: 'Super admin access required' });
+  }
+  next();
+}
+
+export function requirePermission(...permissions: Permission[]) {
+  return (req: Request, res: Response, next: NextFunction) => {
+    if (!req.user) {
+      return res.status(401).json({ success: false, error: 'Authentication required' });
+    }
+    const userPermissions = getPermissionsForRole(req.user.role);
+    const hasAll = permissions.every(p => userPermissions.includes(p));
+    if (!hasAll) {
+      return res.status(403).json({ success: false, error: 'Insufficient permissions' });
+    }
+    next();
+  };
 }

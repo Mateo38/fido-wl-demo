@@ -27,13 +27,31 @@
     "device_types": "Device types",
     "no_data": "No data"
   },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Administrator",
+    "supervisor": "Supervisor",
+    "operator": "Operator"
+  },
   "admins": {
     "title": "Administrators",
     "col_user": "User",
     "col_email": "Email",
     "col_role": "Role",
     "col_passkeys": "Passkeys",
-    "col_registration": "Registration"
+    "col_registration": "Registration",
+    "col_actions": "Actions",
+    "new_admin": "New administrator",
+    "create": "Create administrator",
+    "creating": "Creating...",
+    "select_role": "Role",
+    "change_role": "Change role",
+    "confirm_delete": "Delete administrator {{name}}? This action cannot be undone.",
+    "confirm_reset_password": "Reset password for {{name}}? The password will be reset to azerty123.",
+    "reset_password": "Reset password",
+    "delete": "Delete",
+    "default_password_notice": "Default password: azerty123 — The user will need to change it on first login.",
+    "no_admins": "No administrators"
   },
   "clients": {
     "title": "Clients",

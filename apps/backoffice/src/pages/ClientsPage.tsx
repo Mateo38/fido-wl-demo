@@ -3,6 +3,8 @@ import { useTranslation } from 'react-i18next';
 import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
 import { Key, Plus, Ban, CheckCircle, Trash2, X, Phone, RotateCcw, Eye, Lock, ShieldOff, Shield, Copy } from 'lucide-react';
+import { usePermissions } from '../hooks/usePermissions';
+import { useAdminAuth } from '../App';
 
 interface Client {
   id: string;
@@ -49,6 +51,9 @@ function copyToClipboard(text: string) {
 export function ClientsPage() {
   const { t } = useTranslation();
   const { formatDate } = useLocale();
+  const { user } = useAdminAuth();
+  const { canWrite } = usePermissions(user?.role);
+  const canWriteClients = canWrite('clients');
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
@@ -188,11 +193,13 @@ export function ClientsPage() {
     <div>
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-bold text-white">{t('clients.title')}</h1>
-        <button onClick={() => setShowCreateModal(true)}
-          className="flex items-center gap-2 bg-wl-teal hover:bg-wl-teal-hover text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
-          <Plus className="w-4 h-4" />
-          {t('clients.new_client')}
-        </button>
+        {canWriteClients && (
+          <button onClick={() => setShowCreateModal(true)}
+            className="flex items-center gap-2 bg-wl-teal hover:bg-wl-teal-hover text-white text-sm font-medium px-4 py-2 rounded-lg transition-colors">
+            <Plus className="w-4 h-4" />
+            {t('clients.new_client')}
+          </button>
+        )}
       </div>
 
       {/* Filters */}
@@ -277,20 +284,24 @@ export function ClientsPage() {
                           <Eye className="w-4 h-4" />
                         </button>
                       )}
-                      <button onClick={() => handleToggleStatus(c)} title={c.status === 'active' ? t('clients.block') : t('clients.activate')}
-                        className={`p-1.5 rounded-lg transition-colors ${
-                          c.status === 'active' ? 'text-gray-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10'
-                        }`}>
-                        {c.status === 'active' ? <Ban className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
-                      </button>
-                      <button onClick={() => handleResetPassword(c)} title={t('clients.reset_password')}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
-                        <RotateCcw className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete(c)} title={t('clients.delete')}
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
+                      {canWriteClients && (
+                        <>
+                          <button onClick={() => handleToggleStatus(c)} title={c.status === 'active' ? t('clients.block') : t('clients.activate')}
+                            className={`p-1.5 rounded-lg transition-colors ${
+                              c.status === 'active' ? 'text-gray-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10'
+                            }`}>
+                            {c.status === 'active' ? <Ban className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                          </button>
+                          <button onClick={() => handleResetPassword(c)} title={t('clients.reset_password')}
+                            className="p-1.5 rounded-lg text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
+                            <RotateCcw className="w-4 h-4" />
+                          </button>
+                          <button onClick={() => handleDelete(c)} title={t('clients.delete')}
+                            className="p-1.5 rounded-lg text-gray-400 hover:text-red-400 hover:bg-red-500/10 transition-colors">
+                            <Trash2 className="w-4 h-4" />
+                          </button>
+                        </>
+                      )}
                     </div>
                   </td>
                 </tr>

@@ -27,13 +27,31 @@
     "device_types": "Tipi di dispositivi",
     "no_data": "Nessun dato"
   },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Amministratore",
+    "supervisor": "Supervisore",
+    "operator": "Operatore"
+  },
   "admins": {
     "title": "Amministratori",
     "col_user": "Utente",
     "col_email": "Email",
     "col_role": "Ruolo",
     "col_passkeys": "Passkeys",
-    "col_registration": "Registrazione"
+    "col_registration": "Registrazione",
+    "col_actions": "Azioni",
+    "new_admin": "Nuovo amministratore",
+    "create": "Crea amministratore",
+    "creating": "Creazione...",
+    "select_role": "Ruolo",
+    "change_role": "Cambia ruolo",
+    "confirm_delete": "Eliminare l'amministratore {{name}}? Questa azione è irreversibile.",
+    "confirm_reset_password": "Reimpostare la password di {{name}}? La password verrà reimpostata su azerty123.",
+    "reset_password": "Reimposta password",
+    "delete": "Elimina",
+    "default_password_notice": "Password predefinita: azerty123 — L'utente dovrà cambiarla al primo accesso.",
+    "no_admins": "Nessun amministratore"
   },
   "clients": {
     "title": "Clienti",

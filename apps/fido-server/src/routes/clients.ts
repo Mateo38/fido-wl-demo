@@ -1,7 +1,7 @@
 import { Router, Request, Response } from 'express';
 import bcrypt from 'bcrypt';
 import crypto from 'crypto';
-import { authenticateToken, requireAdmin } from '../middleware/auth';
+import { authenticateToken, requirePermission } from '../middleware/auth';
 import { userRepository } from '../repositories/userRepository';
 import { accountRepository } from '../repositories/accountRepository';
 import { transactionRepository } from '../repositories/transactionRepository';
@@ -10,7 +10,7 @@ import { passkeyRepository } from '../repositories/passkeyRepository';
 
 const router = Router();
 
-router.use(authenticateToken, requireAdmin);
+router.use(authenticateToken);
 
 const DEFAULT_PASSWORD = 'azerty123';
 
@@ -67,7 +67,7 @@ function generateDemoTransactions(accountId: string) {
 }
 
 // List clients
-router.get('/', async (_req: Request, res: Response) => {
+router.get('/', requirePermission('clients:read'), async (_req: Request, res: Response) => {
   try {
     const clients = await userRepository.findAllClients();
     res.json({
@@ -90,7 +90,7 @@ router.get('/', async (_req: Request, res: Response) => {
 });
 
 // Create client
-router.post('/', async (req: Request, res: Response) => {
+router.post('/', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const { email, first_name, last_name, phone } = req.body;
 
@@ -171,7 +171,7 @@ router.post('/', async (req: Request, res: Response) => {
 });
 
 // Update client status (block/activate)
-router.patch('/:id/status', async (req: Request, res: Response) => {
+router.patch('/:id/status', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const { status } = req.body;
 
@@ -203,7 +203,7 @@ router.patch('/:id/status', async (req: Request, res: Response) => {
 });
 
 // Reset client password
-router.patch('/:id/reset-password', async (req: Request, res: Response) => {
+router.patch('/:id/reset-password', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const user = await userRepository.findById(req.params.id);
     if (!user || user.role !== 'customer') {
@@ -230,7 +230,7 @@ router.patch('/:id/reset-password', async (req: Request, res: Response) => {
 });
 
 // Get client passkeys
-router.get('/:id/passkeys', async (req: Request, res: Response) => {
+router.get('/:id/passkeys', requirePermission('clients:read'), async (req: Request, res: Response) => {
   try {
     const user = await userRepository.findById(req.params.id);
     if (!user || user.role !== 'customer') {
@@ -259,7 +259,7 @@ router.get('/:id/passkeys', async (req: Request, res: Response) => {
 });
 
 // Update passkey status (block/activate)
-router.patch('/:id/passkeys/:passkeyId/status', async (req: Request, res: Response) => {
+router.patch('/:id/passkeys/:passkeyId/status', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const { status } = req.body;
     if (!status || !['active', 'blocked'].includes(status)) {
@@ -293,7 +293,7 @@ router.patch('/:id/passkeys/:passkeyId/status', async (req: Request, res: Respon
 });
 
 // Revoke passkey (permanent)
-router.delete('/:id/passkeys/:passkeyId', async (req: Request, res: Response) => {
+router.delete('/:id/passkeys/:passkeyId', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const passkey = await passkeyRepository.findById(req.params.passkeyId);
     if (!passkey || passkey.user_id !== req.params.id) {
@@ -319,7 +319,7 @@ router.delete('/:id/passkeys/:passkeyId', async (req: Request, res: Response) =>
 });
 
 // Delete client
-router.delete('/:id', async (req: Request, res: Response) => {
+router.delete('/:id', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {
     const user = await userRepository.findById(req.params.id);
     if (!user || user.role !== 'customer') {

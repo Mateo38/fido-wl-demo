@@ -27,13 +27,31 @@
     "device_types": "Apparaattypen",
     "no_data": "Geen gegevens"
   },
+  "roles": {
+    "super_admin": "Super Admin",
+    "admin": "Beheerder",
+    "supervisor": "Supervisor",
+    "operator": "Operator"
+  },
   "admins": {
     "title": "Beheerders",
     "col_user": "Gebruiker",
     "col_email": "E-mail",
     "col_role": "Rol",
     "col_passkeys": "Passkeys",
-    "col_registration": "Registratie"
+    "col_registration": "Registratie",
+    "col_actions": "Acties",
+    "new_admin": "Nieuwe beheerder",
+    "create": "Beheerder aanmaken",
+    "creating": "Aanmaken...",
+    "select_role": "Rol",
+    "change_role": "Rol wijzigen",
+    "confirm_delete": "Beheerder {{name}} verwijderen? Deze actie kan niet ongedaan worden gemaakt.",
+    "confirm_reset_password": "Wachtwoord van {{name}} resetten? Het wachtwoord wordt gereset naar azerty123.",
+    "reset_password": "Wachtwoord resetten",
+    "delete": "Verwijderen",
+    "default_password_notice": "Standaard wachtwoord: azerty123 — De gebruiker moet het bij de eerste aanmelding wijzigen.",
+    "no_admins": "Geen beheerders"
   },
   "clients": {
     "title": "Klanten",
