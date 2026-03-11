@@ -6,6 +6,7 @@ import { userRepository } from '../repositories/userRepository';
 import { accountRepository } from '../repositories/accountRepository';
 import { transactionRepository } from '../repositories/transactionRepository';
 import { activityRepository } from '../repositories/activityRepository';
+import { passkeyRepository } from '../repositories/passkeyRepository';
 
 const router = Router();
 
@@ -225,6 +226,95 @@ router.patch('/:id/reset-password', async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Reset client password error:', err);
     res.status(500).json({ success: false, error: 'Failed to reset password' });
+  }
+});
+
+// Get client passkeys
+router.get('/:id/passkeys', async (req: Request, res: Response) => {
+  try {
+    const user = await userRepository.findById(req.params.id);
+    if (!user || user.role !== 'customer') {
+      return res.status(404).json({ success: false, error: 'Client not found' });
+    }
+
+    const passkeys = await passkeyRepository.findByUserId(req.params.id);
+    res.json({
+      success: true,
+      data: passkeys.map(pk => ({
+        id: pk.id,
+        friendly_name: pk.friendly_name,
+        device_type: pk.device_type,
+        authenticator_name: pk.authenticator_name,
+        status: pk.status || 'active',
+        backed_up: pk.backed_up,
+        transports: pk.transports,
+        created_at: pk.created_at,
+        last_used_at: pk.last_used_at,
+      })),
+    });
+  } catch (err) {
+    console.error('Get client passkeys error:', err);
+    res.status(500).json({ success: false, error: 'Failed to get passkeys' });
+  }
+});
+
+// Update passkey status (block/activate)
+router.patch('/:id/passkeys/:passkeyId/status', async (req: Request, res: Response) => {
+  try {
+    const { status } = req.body;
+    if (!status || !['active', 'blocked'].includes(status)) {
+      return res.status(400).json({ success: false, error: 'Status must be active or blocked' });
+    }
+
+    const passkey = await passkeyRepository.findById(req.params.passkeyId);
+    if (!passkey || passkey.user_id !== req.params.id) {
+      return res.status(404).json({ success: false, error: 'Passkey not found' });
+    }
+    if (passkey.status === 'revoked') {
+      return res.status(400).json({ success: false, error: 'Cannot modify a revoked passkey' });
+    }
+
+    const updated = await passkeyRepository.updateStatus(req.params.passkeyId, status);
+
+    await activityRepository.create({
+      user_id: req.user!.userId,
+      action: status === 'blocked' ? 'passkey.blocked' : 'passkey.activated',
+      status: 'success',
+      ip_address: req.ip,
+      user_agent: req.headers['user-agent'],
+      details: { client_id: req.params.id, passkey_id: req.params.passkeyId },
+    });
+
+    res.json({ success: true, data: updated });
+  } catch (err) {
+    console.error('Update passkey status error:', err);
+    res.status(500).json({ success: false, error: 'Failed to update passkey status' });
+  }
+});
+
+// Revoke passkey (permanent)
+router.delete('/:id/passkeys/:passkeyId', async (req: Request, res: Response) => {
+  try {
+    const passkey = await passkeyRepository.findById(req.params.passkeyId);
+    if (!passkey || passkey.user_id !== req.params.id) {
+      return res.status(404).json({ success: false, error: 'Passkey not found' });
+    }
+
+    await passkeyRepository.revoke(req.params.passkeyId);
+
+    await activityRepository.create({
+      user_id: req.user!.userId,
+      action: 'passkey.revoked',
+      status: 'success',
+      ip_address: req.ip,
+      user_agent: req.headers['user-agent'],
+      details: { client_id: req.params.id, passkey_id: req.params.passkeyId },
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Revoke passkey error:', err);
+    res.status(500).json({ success: false, error: 'Failed to revoke passkey' });
   }
 });
 

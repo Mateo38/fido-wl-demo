@@ -36,4 +36,12 @@ export const api = {
     request<any>(`/clients/${id}/reset-password`, { method: 'PATCH' }),
   deleteClient: (id: string) =>
     request<any>(`/clients/${id}`, { method: 'DELETE' }),
+  verifyAdminPassword: (password: string) =>
+    request<any>('/admin/verify-password', { method: 'POST', body: JSON.stringify({ password }) }),
+  getClientPasskeys: (clientId: string) =>
+    request<any>(`/clients/${clientId}/passkeys`),
+  updatePasskeyStatus: (clientId: string, passkeyId: string, status: 'active' | 'blocked') =>
+    request<any>(`/clients/${clientId}/passkeys/${passkeyId}/status`, { method: 'PATCH', body: JSON.stringify({ status }) }),
+  revokePasskey: (clientId: string, passkeyId: string) =>
+    request<any>(`/clients/${clientId}/passkeys/${passkeyId}`, { method: 'DELETE' }),
 };

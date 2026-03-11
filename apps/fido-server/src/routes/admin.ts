@@ -1,4 +1,5 @@
 import { Router, Request, Response } from 'express';
+import bcrypt from 'bcrypt';
 import { authenticateToken, requireAdmin } from '../middleware/auth';
 import { userRepository } from '../repositories/userRepository';
 import { passkeyRepository } from '../repositories/passkeyRepository';
@@ -82,6 +83,31 @@ router.get('/logs', async (req: Request, res: Response) => {
   } catch (err) {
     console.error('Logs error:', err);
     res.status(500).json({ success: false, error: 'Failed to get logs' });
+  }
+});
+
+// Verify admin password (for sensitive actions)
+router.post('/verify-password', async (req: Request, res: Response) => {
+  try {
+    const { password } = req.body;
+    if (!password) {
+      return res.status(400).json({ success: false, error: 'Password required' });
+    }
+
+    const user = await userRepository.findById(req.user!.userId);
+    if (!user) {
+      return res.status(404).json({ success: false, error: 'User not found' });
+    }
+
+    const valid = await bcrypt.compare(password, user.password_hash);
+    if (!valid) {
+      return res.status(401).json({ success: false, error: 'Invalid password' });
+    }
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Verify password error:', err);
+    res.status(500).json({ success: false, error: 'Internal server error' });
   }
 });
 

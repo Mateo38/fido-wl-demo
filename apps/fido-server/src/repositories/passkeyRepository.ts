@@ -10,6 +10,8 @@ export interface PasskeyRow {
   backed_up: boolean;
   transports: string[];
   friendly_name: string | null;
+  status: string;
+  authenticator_name: string | null;
   created_at: Date;
   last_used_at: Date | null;
 }
@@ -49,6 +51,27 @@ export const passkeyRepository = {
       'UPDATE passkeys SET counter = $1, last_used_at = NOW() WHERE credential_id = $2',
       [counter, credentialId]
     );
+  },
+
+  async updateStatus(id: string, status: string): Promise<PasskeyRow | undefined> {
+    const { rows } = await pool.query(
+      'UPDATE passkeys SET status = $1 WHERE id = $2 RETURNING *',
+      [status, id]
+    );
+    return rows[0];
+  },
+
+  async findById(id: string): Promise<PasskeyRow | null> {
+    const { rows } = await pool.query('SELECT * FROM passkeys WHERE id = $1', [id]);
+    return rows[0] || null;
+  },
+
+  async revoke(id: string): Promise<boolean> {
+    const { rowCount } = await pool.query(
+      "UPDATE passkeys SET status = 'revoked' WHERE id = $1 AND status != 'revoked'",
+      [id]
+    );
+    return (rowCount ?? 0) > 0;
   },
 
   async delete(id: string, userId: string): Promise<boolean> {

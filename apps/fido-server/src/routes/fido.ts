@@ -186,6 +186,18 @@ router.post('/authentication/verify', async (req: Request, res: Response) => {
       return res.status(400).json({ success: false, error: 'Passkey not found' });
     }
 
+    if (passkey.status === 'blocked' || passkey.status === 'revoked') {
+      await activityRepository.create({
+        user_id: passkey.user_id,
+        action: 'fido.authentication.failure',
+        status: 'failure',
+        ip_address: req.ip,
+        user_agent: req.headers['user-agent'],
+        details: { reason: 'passkey_' + passkey.status },
+      });
+      return res.status(403).json({ success: false, error: 'passkey_' + passkey.status });
+    }
+
     const verification = await verifyAuthenticationResponse({
       response: body,
       expectedChallenge: challengeRow.challenge,
