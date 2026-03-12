@@ -42,7 +42,7 @@ router.post('/registration/options', authenticateToken, async (req: Request, res
         transports: pk.transports as any,
       })),
       authenticatorSelection: {
-        residentKey: 'preferred',
+        residentKey: 'required',
         userVerification: 'preferred',
       },
     });
