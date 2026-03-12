@@ -13,6 +13,7 @@ import clientRoutes from './routes/clients';
 import healthRoutes from './routes/health';
 import { errorHandler } from './middleware/errorHandler';
 import { runMigrations } from './db/migrate';
+import { ensureSuperAdmin } from './db/ensureSuperAdmin';
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -39,6 +40,7 @@ app.use('/api', healthRoutes);
 app.use(errorHandler);
 
 runMigrations()
+  .then(() => ensureSuperAdmin())
   .then(() => {
     app.listen(PORT, () => {
       console.log(`FIDO Server running on port ${PORT}`);
