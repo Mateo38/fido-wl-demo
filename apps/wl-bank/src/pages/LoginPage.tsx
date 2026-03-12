@@ -15,29 +15,39 @@ export function LoginPage() {
   const [loginLoading, setLoginLoading] = useState(false);
   const [showPasskeyPrompt, setShowPasskeyPrompt] = useState(false);
   const { login } = useAuth();
-  const { authenticateWithPasskey, authenticateAutoModal, registerPasskey, loading: fidoLoading, error: fidoError } = useFido();
+  const { authenticateWithPasskey, authenticateConditional, abortConditionalMediation, registerPasskey, loading: fidoLoading, error: fidoError } = useFido();
   const navigate = useNavigate();
   const { t } = useTranslation();
 
   useEffect(() => {
     let cancelled = false;
 
-    const tryAutoPasskey = async () => {
-      if (!window.PublicKeyCredential) return;
+    const initConditionalUI = async () => {
+      if (
+        !window.PublicKeyCredential ||
+        !PublicKeyCredential.isConditionalMediationAvailable
+      ) return;
 
-      const success = await authenticateAutoModal();
+      const available = await PublicKeyCredential.isConditionalMediationAvailable();
+      if (!available || cancelled) return;
+
+      const success = await authenticateConditional();
       if (success && !cancelled) {
         navigate('/');
       }
     };
 
-    tryAutoPasskey();
+    initConditionalUI();
 
-    return () => { cancelled = true; };
+    return () => {
+      cancelled = true;
+      abortConditionalMediation();
+    };
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    abortConditionalMediation();
     setError('');
     setLoginLoading(true);
     try {
@@ -171,7 +181,7 @@ export function LoginPage() {
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
                   placeholder="marie.dupont@email.fr"
-                  autoComplete="username"
+                  autoComplete="username webauthn"
                   className="w-full bg-slate-800 border border-slate-700 rounded-xl py-3 pl-11 pr-4 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-violet-500 focus:border-transparent"
                   required
                 />

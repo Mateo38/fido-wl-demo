@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { startRegistration, startAuthentication } from '@simplewebauthn/browser';
 import { api } from '../api';
 import { useAuth } from '../context/AuthContext';
@@ -7,6 +7,7 @@ export function useFido() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const { loginWithPasskey } = useAuth();
+  const conditionalAbortController = useRef<AbortController | null>(null);
 
   const registerPasskey = async (friendlyName?: string) => {
     setLoading(true);
@@ -58,12 +59,14 @@ export function useFido() {
     }
   };
 
-  const authenticateAutoModal = async (): Promise<boolean> => {
+  const authenticateConditional = async (): Promise<boolean> => {
     try {
+      conditionalAbortController.current = new AbortController();
+
       const optionsRes = await api.fidoAuthenticationOptions();
       const options = optionsRes.data;
 
-      const credential = await startAuthentication(options);
+      const credential = await startAuthentication(options, true);
 
       const verifyRes = await api.fidoAuthenticationVerify({
         credential,
@@ -74,8 +77,15 @@ export function useFido() {
       return true;
     } catch {
       return false;
+    } finally {
+      conditionalAbortController.current = null;
     }
   };
 
-  return { registerPasskey, authenticateWithPasskey, authenticateAutoModal, loading, error };
+  const abortConditionalMediation = () => {
+    conditionalAbortController.current?.abort();
+    conditionalAbortController.current = null;
+  };
+
+  return { registerPasskey, authenticateWithPasskey, authenticateConditional, abortConditionalMediation, loading, error };
 }
