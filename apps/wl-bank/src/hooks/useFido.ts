@@ -72,8 +72,7 @@ export function useFido() {
 
       loginWithPasskey(verifyRes.data.token, verifyRes.data.user);
       return true;
-    } catch (err: any) {
-      console.error('[AutoPasskey]', err.name, err.message, err);
+    } catch {
       return false;
     }
   };
