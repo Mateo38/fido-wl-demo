@@ -24,7 +24,20 @@
     "passkey_description": "Registra una passkey per accedere pi\u00f9 velocemente e in sicurezza con la tua impronta digitale o Face ID.",
     "registering": "Registrazione...",
     "register_passkey": "Registra una passkey",
-    "later": "Pi\u00f9 tardi"
+    "later": "Pi\u00f9 tardi",
+    "open_account": "Apri un conto"
+  },
+  "onboarding": {
+    "title": "Apri un conto",
+    "subtitle": "Inizia la tua registrazione in pochi clic",
+    "first_name": "Nome",
+    "last_name": "Cognome",
+    "email": "Email",
+    "continue": "Continua",
+    "success_title": "Richiesta inviata!",
+    "success_message": "La tua richiesta di apertura conto \u00e8 stata registrata. Un consulente validare\u00e0 la tua domanda.",
+    "download_app": "Scarica l'app mobile WL Bank per completare la registrazione e accedere a tutti i servizi bancari.",
+    "back_to_login": "Torna al login"
   },
   "change_password": {
     "title": "Cambio password richiesto",

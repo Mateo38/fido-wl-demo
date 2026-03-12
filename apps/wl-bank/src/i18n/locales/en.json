@@ -24,7 +24,20 @@
     "passkey_description": "Register a passkey to log in faster and more securely with your fingerprint or Face ID.",
     "registering": "Registering...",
     "register_passkey": "Register a passkey",
-    "later": "Later"
+    "later": "Later",
+    "open_account": "Open an account"
+  },
+  "onboarding": {
+    "title": "Open an account",
+    "subtitle": "Start your registration in a few clicks",
+    "first_name": "First name",
+    "last_name": "Last name",
+    "email": "Email",
+    "continue": "Continue",
+    "success_title": "Request sent!",
+    "success_message": "Your account opening request has been registered. An advisor will validate your application.",
+    "download_app": "Download the WL Bank mobile app to complete your registration and access all your banking services.",
+    "back_to_login": "Back to login"
   },
   "change_password": {
     "title": "Password change required",

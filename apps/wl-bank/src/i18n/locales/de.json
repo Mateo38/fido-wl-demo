@@ -24,7 +24,20 @@
     "passkey_description": "Registrieren Sie einen Passkey, um sich schneller und sicherer mit Ihrem Fingerabdruck oder Face ID anzumelden.",
     "registering": "Registrierung...",
     "register_passkey": "Passkey registrieren",
-    "later": "Sp\u00e4ter"
+    "later": "Sp\u00e4ter",
+    "open_account": "Konto er\u00f6ffnen"
+  },
+  "onboarding": {
+    "title": "Konto er\u00f6ffnen",
+    "subtitle": "Starten Sie Ihre Registrierung in wenigen Klicks",
+    "first_name": "Vorname",
+    "last_name": "Nachname",
+    "email": "E-Mail",
+    "continue": "Weiter",
+    "success_title": "Anfrage gesendet!",
+    "success_message": "Ihre Kontoer\u00f6ffnungsanfrage wurde registriert. Ein Berater wird Ihren Antrag pr\u00fcfen.",
+    "download_app": "Laden Sie die WL Bank App herunter, um Ihre Registrierung abzuschlie\u00dfen und auf alle Bankdienstleistungen zuzugreifen.",
+    "back_to_login": "Zur\u00fcck zur Anmeldung"
   },
   "change_password": {
     "title": "Passwort\u00e4nderung erforderlich",

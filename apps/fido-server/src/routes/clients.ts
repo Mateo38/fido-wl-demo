@@ -170,6 +170,64 @@ router.post('/', requirePermission('clients:write'), async (req: Request, res: R
   }
 });
 
+// Approve onboarding
+router.patch('/:id/approve-onboarding', requirePermission('clients:write'), async (req: Request, res: Response) => {
+  try {
+    const user = await userRepository.findById(req.params.id);
+    if (!user || user.role !== 'customer') {
+      return res.status(404).json({ success: false, error: 'Client not found' });
+    }
+
+    if (user.status !== 'onboarding-tovalidate') {
+      return res.status(400).json({ success: false, error: 'Client is not in onboarding status' });
+    }
+
+    const password_hash = await bcrypt.hash(DEFAULT_PASSWORD, 10);
+    await userRepository.updatePassword(req.params.id, password_hash, true);
+    await userRepository.updateStatus(req.params.id, 'active');
+
+    // Generate demo banking data
+    const balance = +(2000 + Math.random() * 6000).toFixed(2);
+    const account = await accountRepository.create({
+      user_id: user.id,
+      iban: generateIban(),
+      bic: 'WLBKFRPP',
+      account_type: 'checking',
+      balance,
+      label: 'Compte Courant',
+    });
+
+    const savingsBalance = +(5000 + Math.random() * 15000).toFixed(2);
+    await accountRepository.create({
+      user_id: user.id,
+      iban: generateIban(),
+      bic: 'WLBKFRPP',
+      account_type: 'savings',
+      balance: savingsBalance,
+      label: 'Livret Épargne',
+    });
+
+    const transactions = generateDemoTransactions(account.id);
+    for (const t of transactions) {
+      await transactionRepository.create(t);
+    }
+
+    await activityRepository.create({
+      user_id: req.user!.userId,
+      action: 'onboarding.approved',
+      status: 'success',
+      ip_address: req.ip,
+      user_agent: req.headers['user-agent'],
+      details: { client_id: req.params.id, client_email: user.email },
+    });
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error('Approve onboarding error:', err);
+    res.status(500).json({ success: false, error: 'Failed to approve onboarding' });
+  }
+});
+
 // Update client status (block/activate)
 router.patch('/:id/status', requirePermission('clients:write'), async (req: Request, res: Response) => {
   try {

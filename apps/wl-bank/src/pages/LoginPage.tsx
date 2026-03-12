@@ -230,7 +230,16 @@ export function LoginPage() {
             {fidoLoading ? t('login.verifying') : t('login.passkey_login')}
           </button>
 
-          <div className="mt-6">
+          <div className="mt-6 text-center">
+            <button
+              onClick={() => navigate('/register')}
+              className="text-sm text-violet-400 hover:text-violet-300 transition-colors"
+            >
+              {t('login.open_account')}
+            </button>
+          </div>
+
+          <div className="mt-4">
             <LanguageSelector variant="login" />
           </div>
         </div>

@@ -70,4 +70,11 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(data),
     }),
+
+  // Onboarding
+  register: (data: { first_name: string; last_name: string; email: string }) =>
+    request<any>('/onboarding', {
+      method: 'POST',
+      body: JSON.stringify(data),
+    }),
 };

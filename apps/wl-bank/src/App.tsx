@@ -8,6 +8,7 @@ import { TransactionsPage } from './pages/TransactionsPage';
 import { CardsPage } from './pages/CardsPage';
 import { TransfersPage } from './pages/TransfersPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { OnboardingPage } from './pages/OnboardingPage';
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { isAuthenticated, loading, user } = useAuth();
@@ -22,6 +23,7 @@ function AppRoutes() {
   return (
     <Routes>
       <Route path="/login" element={isAuthenticated ? (user?.must_change_password ? <Navigate to="/change-password" /> : <Navigate to="/" />) : <LoginPage />} />
+      <Route path="/register" element={<OnboardingPage />} />
       <Route path="/change-password" element={isAuthenticated && user?.must_change_password ? <ChangePasswordPage /> : <Navigate to="/" />} />
       <Route path="/" element={<ProtectedRoute><Layout /></ProtectedRoute>}>
         <Route index element={<DashboardPage />} />

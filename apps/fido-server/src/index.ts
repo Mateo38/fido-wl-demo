@@ -10,6 +10,7 @@ import fidoRoutes from './routes/fido';
 import bankingRoutes from './routes/banking';
 import adminRoutes from './routes/admin';
 import clientRoutes from './routes/clients';
+import onboardingRoutes from './routes/onboarding';
 import healthRoutes from './routes/health';
 import { errorHandler } from './middleware/errorHandler';
 import { runMigrations } from './db/migrate';
@@ -34,6 +35,7 @@ app.use('/api/fido', fidoRoutes);
 app.use('/api', bankingRoutes);
 app.use('/api/admin', adminRoutes);
 app.use('/api/clients', clientRoutes);
+app.use('/api/onboarding', onboardingRoutes);
 app.use('/api', healthRoutes);
 
 // Error handler

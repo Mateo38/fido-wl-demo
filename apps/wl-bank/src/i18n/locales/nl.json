@@ -24,7 +24,20 @@
     "passkey_description": "Registreer een passkey om sneller en veiliger in te loggen met uw vingerafdruk of Face ID.",
     "registering": "Registreren...",
     "register_passkey": "Passkey registreren",
-    "later": "Later"
+    "later": "Later",
+    "open_account": "Account openen"
+  },
+  "onboarding": {
+    "title": "Account openen",
+    "subtitle": "Start uw registratie in een paar klikken",
+    "first_name": "Voornaam",
+    "last_name": "Achternaam",
+    "email": "E-mail",
+    "continue": "Doorgaan",
+    "success_title": "Aanvraag verzonden!",
+    "success_message": "Uw aanvraag voor het openen van een account is geregistreerd. Een adviseur zal uw aanvraag valideren.",
+    "download_app": "Download de WL Bank mobiele app om uw registratie te voltooien en toegang te krijgen tot al uw bankdiensten.",
+    "back_to_login": "Terug naar inloggen"
   },
   "change_password": {
     "title": "Wachtwoord wijzigen vereist",

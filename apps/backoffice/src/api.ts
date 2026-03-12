@@ -52,4 +52,6 @@ export const api = {
     request<any>(`/admin/users/${id}/reset-password`, { method: 'PATCH' }),
   deleteAdmin: (id: string) =>
     request<any>(`/admin/users/${id}`, { method: 'DELETE' }),
+  approveOnboarding: (id: string) =>
+    request<any>(`/clients/${id}/approve-onboarding`, { method: 'PATCH' }),
 };

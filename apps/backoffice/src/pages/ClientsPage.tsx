@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useLocale } from '../hooks/useLocale';
 import { api } from '../api';
-import { Key, Plus, Ban, CheckCircle, Trash2, X, Phone, RotateCcw, Eye, Lock, ShieldOff, Shield, Copy } from 'lucide-react';
+import { Key, Plus, Ban, CheckCircle, Trash2, X, Phone, RotateCcw, Eye, Lock, ShieldOff, Shield, Copy, UserCheck, Clock } from 'lucide-react';
 import { usePermissions } from '../hooks/usePermissions';
 import { useAdminAuth } from '../App';
 
@@ -57,7 +57,7 @@ export function ClientsPage() {
   const [clients, setClients] = useState<Client[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
-  const [filter, setFilter] = useState<'all' | 'active' | 'blocked'>('all');
+  const [filter, setFilter] = useState<'all' | 'active' | 'blocked' | 'onboarding-tovalidate'>('all');
   const [form, setForm] = useState({ email: '', first_name: '', last_name: '', phone: '' });
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState('');
@@ -102,6 +102,12 @@ export function ClientsPage() {
     } finally {
       setSubmitting(false);
     }
+  };
+
+  const handleApproveOnboarding = async (client: Client) => {
+    if (!confirm(t('clients.confirm_approve_onboarding', { name: `${client.first_name} ${client.last_name}` }))) return;
+    await api.approveOnboarding(client.id);
+    loadClients();
   };
 
   const handleToggleStatus = async (client: Client) => {
@@ -204,7 +210,7 @@ export function ClientsPage() {
 
       {/* Filters */}
       <div className="flex gap-2 mb-4">
-        {(['all', 'active', 'blocked'] as const).map(f => (
+        {(['all', 'active', 'blocked', 'onboarding-tovalidate'] as const).map(f => (
           <button key={f} onClick={() => setFilter(f)}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
               filter === f ? 'bg-wl-teal text-white' : 'bg-gray-800 text-gray-400 hover:bg-gray-700'
@@ -263,9 +269,13 @@ export function ClientsPage() {
                   </td>
                   <td className="px-4 py-3 text-center">
                     <span className={`inline-flex items-center gap-1 text-xs font-medium px-2 py-0.5 rounded-full ${
-                      c.status === 'active' ? 'bg-emerald-500/10 text-emerald-400' : 'bg-red-500/10 text-red-400'
+                      c.status === 'active' ? 'bg-emerald-500/10 text-emerald-400' :
+                      c.status === 'onboarding-tovalidate' ? 'bg-indigo-500/10 text-indigo-400' :
+                      'bg-red-500/10 text-red-400'
                     }`}>
-                      {c.status === 'active' ? <CheckCircle className="w-3 h-3" /> : <Ban className="w-3 h-3" />}
+                      {c.status === 'active' && <CheckCircle className="w-3 h-3" />}
+                      {c.status === 'blocked' && <Ban className="w-3 h-3" />}
+                      {c.status === 'onboarding-tovalidate' && <Clock className="w-3 h-3" />}
                       {t(`clients.status_${c.status}`)}
                     </span>
                   </td>
@@ -286,12 +296,20 @@ export function ClientsPage() {
                       )}
                       {canWriteClients && (
                         <>
-                          <button onClick={() => handleToggleStatus(c)} title={c.status === 'active' ? t('clients.block') : t('clients.activate')}
-                            className={`p-1.5 rounded-lg transition-colors ${
-                              c.status === 'active' ? 'text-gray-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10'
-                            }`}>
-                            {c.status === 'active' ? <Ban className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
-                          </button>
+                          {c.status === 'onboarding-tovalidate' && (
+                            <button onClick={() => handleApproveOnboarding(c)} title={t('clients.approve_onboarding')}
+                              className="p-1.5 rounded-lg text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10 transition-colors">
+                              <UserCheck className="w-4 h-4" />
+                            </button>
+                          )}
+                          {c.status !== 'onboarding-tovalidate' && (
+                            <button onClick={() => handleToggleStatus(c)} title={c.status === 'active' ? t('clients.block') : t('clients.activate')}
+                              className={`p-1.5 rounded-lg transition-colors ${
+                                c.status === 'active' ? 'text-gray-400 hover:text-amber-400 hover:bg-amber-500/10' : 'text-gray-400 hover:text-emerald-400 hover:bg-emerald-500/10'
+                              }`}>
+                              {c.status === 'active' ? <Ban className="w-4 h-4" /> : <CheckCircle className="w-4 h-4" />}
+                            </button>
+                          )}
                           <button onClick={() => handleResetPassword(c)} title={t('clients.reset_password')}
                             className="p-1.5 rounded-lg text-gray-400 hover:text-blue-400 hover:bg-blue-500/10 transition-colors">
                             <RotateCcw className="w-4 h-4" />
