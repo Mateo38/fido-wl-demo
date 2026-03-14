@@ -1,4 +1,4 @@
--- Add onboarding-tovalidate status
+-- Fix: ensure onboarding-tovalidate status is allowed (idempotent)
 DO $$
 BEGIN
   IF EXISTS (
