@@ -25,6 +25,7 @@
     "registering": "Enregistrement...",
     "register_passkey": "Enregistrer une passkey",
     "later": "Plus tard",
+    "no_account": "Vous n'avez pas de compte ?",
     "open_account": "Ouvrir un compte"
   },
   "onboarding": {

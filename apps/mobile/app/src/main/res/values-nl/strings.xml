@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WL Bank</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_transactions">Transacties</string>
+    <string name="nav_cards">Kaarten</string>
+    <string name="nav_transfers">Overschrijvingen</string>
+    <string name="nav_settings">Instellingen</string>
+    <string name="nav_logout">Uitloggen</string>
+
+    <string name="login_connect_to_space">Log in op uw bankruimte</string>
+    <string name="login_email">E-mail</string>
+    <string name="login_password">Wachtwoord</string>
+    <string name="login_logging_in">Inloggen\u2026</string>
+    <string name="login_submit">Inloggen</string>
+    <string name="login_or">of</string>
+    <string name="login_verifying">Verifi\u00ebren\u2026</string>
+    <string name="login_passkey_login">Inloggen met een passkey</string>
+    <string name="login_invalid_credentials">Ongeldige inloggegevens</string>
+    <string name="login_passkey_title">Beveilig uw account</string>
+    <string name="login_passkey_description">Registreer een passkey om sneller en veiliger in te loggen met uw vingerafdruk of Face ID.</string>
+    <string name="login_registering">Registreren\u2026</string>
+    <string name="login_register_passkey">Passkey registreren</string>
+    <string name="login_later">Later</string>
+    <string name="login_no_account">Heeft u nog geen account?</string>
+    <string name="login_open_account">Account openen</string>
+
+    <string name="onboarding_title">Account openen</string>
+    <string name="onboarding_subtitle">Start uw registratie in een paar klikken</string>
+    <string name="onboarding_first_name">Voornaam</string>
+    <string name="onboarding_last_name">Achternaam</string>
+    <string name="onboarding_email">E-mail</string>
+    <string name="onboarding_continue">Doorgaan</string>
+    <string name="onboarding_success_title">Aanvraag verzonden!</string>
+    <string name="onboarding_success_message">Uw aanvraag voor het openen van een account is geregistreerd. Een adviseur zal uw aanvraag valideren.</string>
+    <string name="onboarding_download_app">Download de WL Bank mobiele app om uw registratie te voltooien en toegang te krijgen tot al uw bankdiensten.</string>
+    <string name="onboarding_back_to_login">Terug naar inloggen</string>
+
+    <string name="change_password_title">Wachtwoord wijzigen vereist</string>
+    <string name="change_password_description">Om veiligheidsredenen moet u een nieuw wachtwoord instellen voordat u verdergaat.</string>
+    <string name="change_password_new_password">Nieuw wachtwoord</string>
+    <string name="change_password_confirm_password">Wachtwoord bevestigen</string>
+    <string name="change_password_min_length">Wachtwoord moet minimaal 8 tekens bevatten</string>
+    <string name="change_password_mismatch">Wachtwoorden komen niet overeen</string>
+    <string name="change_password_saving">Opslaan\u2026</string>
+    <string name="change_password_submit">Wachtwoord wijzigen</string>
+
+    <string name="dashboard_greeting">Hallo, %1$s</string>
+    <string name="dashboard_overview">Hier is een overzicht van uw financi\u00ebn</string>
+    <string name="dashboard_total_balance">Totaal saldo</string>
+    <string name="dashboard_checking">Betaalrekening</string>
+    <string name="dashboard_savings">Spaarrekening</string>
+    <string name="dashboard_your_cards">Uw kaarten</string>
+    <string name="dashboard_card_active">Actief</string>
+    <string name="dashboard_card_expires">Verloopt %1$s</string>
+    <string name="dashboard_recent_transactions">Recente transacties</string>
+    <string name="dashboard_no_transactions">Geen transacties</string>
+
+    <string name="transactions_title">Transacties</string>
+    <string name="transactions_all">Alle</string>
+    <string name="transactions_salary">Salaris</string>
+    <string name="transactions_rent">Huur</string>
+    <string name="transactions_groceries">Boodschappen</string>
+    <string name="transactions_utilities">Rekeningen</string>
+    <string name="transactions_transport">Vervoer</string>
+    <string name="transactions_entertainment">Vrije tijd</string>
+    <string name="transactions_restaurant">Restaurant</string>
+    <string name="transactions_shopping">Winkelen</string>
+    <string name="transactions_health">Gezondheid</string>
+    <string name="transactions_insurance">Verzekering</string>
+    <string name="transactions_subscription">Abonnement</string>
+    <string name="transactions_transfer">Overschrijving</string>
+    <string name="transactions_no_transactions">Geen transacties</string>
+    <string name="transactions_count">%1$d transactie</string>
+    <string name="transactions_count_plural">%1$d transacties</string>
+    <string name="transactions_previous">Vorige</string>
+    <string name="transactions_next">Volgende</string>
+
+    <string name="cards_title">Mijn kaarten</string>
+    <string name="cards_settings">Kaartinstellingen</string>
+    <string name="cards_contactless">Contactloos</string>
+    <string name="cards_nfc_payments">NFC-betalingen</string>
+    <string name="cards_online_payments">Online betaling</string>
+    <string name="cards_online_purchases">Online aankopen</string>
+    <string name="cards_lock_card">Kaart vergrendelen</string>
+    <string name="cards_lock_temporarily">Tijdelijk blokkeren</string>
+    <string name="cards_locked">Vergrendeld</string>
+    <string name="cards_active">Actief</string>
+    <string name="cards_daily_limit">Dagelijks limiet</string>
+    <string name="cards_monthly_limit">Maandelijks limiet</string>
+
+    <string name="transfers_title">Overschrijvingen</string>
+    <string name="transfers_new_transfer">Nieuwe overschrijving</string>
+    <string name="transfers_beneficiaries">Begunstigden</string>
+    <string name="transfers_from_account">Van rekening</string>
+    <string name="transfers_beneficiary">Begunstigde</string>
+    <string name="transfers_select_beneficiary">Selecteer een begunstigde</string>
+    <string name="transfers_amount">Bedrag (EUR)</string>
+    <string name="transfers_reason">Mededeling</string>
+    <string name="transfers_reason_placeholder">Mededeling overschrijving</string>
+    <string name="transfers_sending">Verzenden\u2026</string>
+    <string name="transfers_send_transfer">Overschrijving uitvoeren</string>
+    <string name="transfers_transfer_success">Overschrijving succesvol uitgevoerd</string>
+    <string name="transfers_saved_beneficiaries">Opgeslagen begunstigden</string>
+    <string name="transfers_add">Toevoegen</string>
+    <string name="transfers_name">Naam</string>
+    <string name="transfers_iban">IBAN</string>
+    <string name="transfers_no_beneficiaries">Geen begunstigden</string>
+
+    <string name="settings_title">Instellingen</string>
+    <string name="settings_profile">Profiel</string>
+    <string name="settings_first_name">Voornaam</string>
+    <string name="settings_last_name">Achternaam</string>
+    <string name="settings_email">E-mail</string>
+    <string name="settings_passkeys">Passkeys</string>
+    <string name="settings_registering">Registreren\u2026</string>
+    <string name="settings_add_passkey">Passkey toevoegen</string>
+    <string name="settings_passkey_registered">Passkey succesvol geregistreerd</string>
+    <string name="settings_no_passkeys">Geen passkeys geregistreerd</string>
+    <string name="settings_no_passkeys_hint">Voeg een passkey toe voor sneller en veiliger inloggen</string>
+    <string name="settings_created_on">Aangemaakt op %1$s</string>
+    <string name="settings_last_used">Laatst gebruikt %1$s</string>
+    <string name="settings_passkey_name_prompt">Passkey naam (bijv. Pixel, Samsung)</string>
+    <string name="settings_passkey_default_name">Mijn apparaat</string>
+    <string name="settings_delete_passkey_confirm">Deze passkey verwijderen?</string>
+    <string name="settings_language">Taal</string>
+</resources>

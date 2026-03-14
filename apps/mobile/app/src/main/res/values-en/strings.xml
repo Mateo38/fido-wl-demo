@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WL Bank</string>
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_transactions">Transactions</string>
+    <string name="nav_cards">Cards</string>
+    <string name="nav_transfers">Transfers</string>
+    <string name="nav_settings">Settings</string>
+    <string name="nav_logout">Log out</string>
+
+    <string name="login_connect_to_space">Log in to your banking space</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_logging_in">Logging in\u2026</string>
+    <string name="login_submit">Log in</string>
+    <string name="login_or">or</string>
+    <string name="login_verifying">Verifying\u2026</string>
+    <string name="login_passkey_login">Log in with a passkey</string>
+    <string name="login_invalid_credentials">Invalid credentials</string>
+    <string name="login_passkey_title">Secure your account</string>
+    <string name="login_passkey_description">Register a passkey to log in faster and more securely with your fingerprint or Face ID.</string>
+    <string name="login_registering">Registering\u2026</string>
+    <string name="login_register_passkey">Register a passkey</string>
+    <string name="login_later">Later</string>
+    <string name="login_no_account">Don\'t have an account?</string>
+    <string name="login_open_account">Open an account</string>
+
+    <string name="onboarding_title">Open an account</string>
+    <string name="onboarding_subtitle">Start your registration in a few clicks</string>
+    <string name="onboarding_first_name">First name</string>
+    <string name="onboarding_last_name">Last name</string>
+    <string name="onboarding_email">Email</string>
+    <string name="onboarding_continue">Continue</string>
+    <string name="onboarding_success_title">Request sent!</string>
+    <string name="onboarding_success_message">Your account opening request has been registered. An advisor will validate your application.</string>
+    <string name="onboarding_download_app">Download the WL Bank mobile app to complete your registration and access all your banking services.</string>
+    <string name="onboarding_back_to_login">Back to login</string>
+
+    <string name="change_password_title">Password change required</string>
+    <string name="change_password_description">For security reasons, you must set a new password before continuing.</string>
+    <string name="change_password_new_password">New password</string>
+    <string name="change_password_confirm_password">Confirm password</string>
+    <string name="change_password_min_length">Password must be at least 8 characters</string>
+    <string name="change_password_mismatch">Passwords do not match</string>
+    <string name="change_password_saving">Saving\u2026</string>
+    <string name="change_password_submit">Change password</string>
+
+    <string name="dashboard_greeting">Hello, %1$s</string>
+    <string name="dashboard_overview">Here\'s an overview of your finances</string>
+    <string name="dashboard_total_balance">Total balance</string>
+    <string name="dashboard_checking">Current account</string>
+    <string name="dashboard_savings">Savings</string>
+    <string name="dashboard_your_cards">Your cards</string>
+    <string name="dashboard_card_active">Active</string>
+    <string name="dashboard_card_expires">Expires %1$s</string>
+    <string name="dashboard_recent_transactions">Recent transactions</string>
+    <string name="dashboard_no_transactions">No transactions</string>
+
+    <string name="transactions_title">Transactions</string>
+    <string name="transactions_all">All</string>
+    <string name="transactions_salary">Salary</string>
+    <string name="transactions_rent">Rent</string>
+    <string name="transactions_groceries">Groceries</string>
+    <string name="transactions_utilities">Utilities</string>
+    <string name="transactions_transport">Transport</string>
+    <string name="transactions_entertainment">Entertainment</string>
+    <string name="transactions_restaurant">Restaurant</string>
+    <string name="transactions_shopping">Shopping</string>
+    <string name="transactions_health">Health</string>
+    <string name="transactions_insurance">Insurance</string>
+    <string name="transactions_subscription">Subscription</string>
+    <string name="transactions_transfer">Transfer</string>
+    <string name="transactions_no_transactions">No transactions</string>
+    <string name="transactions_count">%1$d transaction</string>
+    <string name="transactions_count_plural">%1$d transactions</string>
+    <string name="transactions_previous">Previous</string>
+    <string name="transactions_next">Next</string>
+
+    <string name="cards_title">My cards</string>
+    <string name="cards_settings">Card settings</string>
+    <string name="cards_contactless">Contactless</string>
+    <string name="cards_nfc_payments">NFC payments</string>
+    <string name="cards_online_payments">Online payments</string>
+    <string name="cards_online_purchases">Online purchases</string>
+    <string name="cards_lock_card">Lock card</string>
+    <string name="cards_lock_temporarily">Temporarily block</string>
+    <string name="cards_locked">Locked</string>
+    <string name="cards_active">Active</string>
+    <string name="cards_daily_limit">Daily limit</string>
+    <string name="cards_monthly_limit">Monthly limit</string>
+
+    <string name="transfers_title">Transfers</string>
+    <string name="transfers_new_transfer">New transfer</string>
+    <string name="transfers_beneficiaries">Beneficiaries</string>
+    <string name="transfers_from_account">From account</string>
+    <string name="transfers_beneficiary">Beneficiary</string>
+    <string name="transfers_select_beneficiary">Select a beneficiary</string>
+    <string name="transfers_amount">Amount (EUR)</string>
+    <string name="transfers_reason">Reference</string>
+    <string name="transfers_reason_placeholder">Transfer reference</string>
+    <string name="transfers_sending">Sending\u2026</string>
+    <string name="transfers_send_transfer">Make transfer</string>
+    <string name="transfers_transfer_success">Transfer completed successfully</string>
+    <string name="transfers_saved_beneficiaries">Saved beneficiaries</string>
+    <string name="transfers_add">Add</string>
+    <string name="transfers_name">Name</string>
+    <string name="transfers_iban">IBAN</string>
+    <string name="transfers_no_beneficiaries">No beneficiaries</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_profile">Profile</string>
+    <string name="settings_first_name">First name</string>
+    <string name="settings_last_name">Last name</string>
+    <string name="settings_email">Email</string>
+    <string name="settings_passkeys">Passkeys</string>
+    <string name="settings_registering">Registering\u2026</string>
+    <string name="settings_add_passkey">Add a passkey</string>
+    <string name="settings_passkey_registered">Passkey registered successfully</string>
+    <string name="settings_no_passkeys">No passkeys registered</string>
+    <string name="settings_no_passkeys_hint">Add a passkey for faster and more secure login</string>
+    <string name="settings_created_on">Created on %1$s</string>
+    <string name="settings_last_used">Last used %1$s</string>
+    <string name="settings_passkey_name_prompt">Passkey name (e.g. Pixel, Samsung)</string>
+    <string name="settings_passkey_default_name">My device</string>
+    <string name="settings_delete_passkey_confirm">Delete this passkey?</string>
+    <string name="settings_language">Language</string>
+</resources>

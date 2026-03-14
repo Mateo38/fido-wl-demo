@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="violet_600">#FF7C3AED</color>
+    <color name="slate_950">#FF020617</color>
+    <color name="slate_900">#FF0F172A</color>
+    <color name="slate_800">#FF1E293B</color>
+    <color name="emerald_400">#FF34D399</color>
+    <color name="red_400">#FFF87171</color>
+</resources>

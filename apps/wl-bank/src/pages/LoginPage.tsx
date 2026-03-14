@@ -230,16 +230,23 @@ export function LoginPage() {
             {fidoLoading ? t('login.verifying') : t('login.passkey_login')}
           </button>
 
-          <div className="mt-6 text-center">
-            <button
-              onClick={() => navigate('/register')}
-              className="text-sm text-violet-400 hover:text-violet-300 transition-colors"
-            >
-              {t('login.open_account')}
-            </button>
+          <div className="relative my-6">
+            <div className="absolute inset-0 flex items-center">
+              <div className="w-full border-t border-slate-800" />
+            </div>
+            <div className="relative flex justify-center text-sm">
+              <span className="px-4 bg-slate-950 text-slate-500">{t('login.no_account')}</span>
+            </div>
           </div>
 
-          <div className="mt-4">
+          <button
+            onClick={() => navigate('/register')}
+            className="w-full bg-slate-800 hover:bg-slate-700 border border-slate-700 text-white font-medium py-3 px-4 rounded-xl transition-colors"
+          >
+            {t('login.open_account')}
+          </button>
+
+          <div className="mt-6">
             <LanguageSelector variant="login" />
           </div>
         </div>

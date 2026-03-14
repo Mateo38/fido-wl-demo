@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">WL Bank</string>
+    <string name="nav_dashboard">Panoramica</string>
+    <string name="nav_transactions">Transazioni</string>
+    <string name="nav_cards">Carte</string>
+    <string name="nav_transfers">Bonifici</string>
+    <string name="nav_settings">Impostazioni</string>
+    <string name="nav_logout">Disconnetti</string>
+
+    <string name="login_connect_to_space">Accedi al tuo spazio bancario</string>
+    <string name="login_email">Email</string>
+    <string name="login_password">Password</string>
+    <string name="login_logging_in">Accesso\u2026</string>
+    <string name="login_submit">Accedi</string>
+    <string name="login_or">o</string>
+    <string name="login_verifying">Verifica\u2026</string>
+    <string name="login_passkey_login">Accedi con una passkey</string>
+    <string name="login_invalid_credentials">Credenziali non valide</string>
+    <string name="login_passkey_title">Proteggi il tuo conto</string>
+    <string name="login_passkey_description">Registra una passkey per accedere pi\u00f9 velocemente e in sicurezza con la tua impronta digitale o Face ID.</string>
+    <string name="login_registering">Registrazione\u2026</string>
+    <string name="login_register_passkey">Registra una passkey</string>
+    <string name="login_later">Pi\u00f9 tardi</string>
+    <string name="login_no_account">Non hai un conto?</string>
+    <string name="login_open_account">Apri un conto</string>
+
+    <string name="onboarding_title">Apri un conto</string>
+    <string name="onboarding_subtitle">Inizia la tua registrazione in pochi clic</string>
+    <string name="onboarding_first_name">Nome</string>
+    <string name="onboarding_last_name">Cognome</string>
+    <string name="onboarding_email">Email</string>
+    <string name="onboarding_continue">Continua</string>
+    <string name="onboarding_success_title">Richiesta inviata!</string>
+    <string name="onboarding_success_message">La tua richiesta di apertura conto \u00e8 stata registrata. Un consulente validar\u00e0 la tua domanda.</string>
+    <string name="onboarding_download_app">Scarica l\'app mobile WL Bank per completare la registrazione e accedere a tutti i servizi bancari.</string>
+    <string name="onboarding_back_to_login">Torna al login</string>
+
+    <string name="change_password_title">Cambio password richiesto</string>
+    <string name="change_password_description">Per motivi di sicurezza, devi impostare una nuova password prima di continuare.</string>
+    <string name="change_password_new_password">Nuova password</string>
+    <string name="change_password_confirm_password">Conferma password</string>
+    <string name="change_password_min_length">La password deve contenere almeno 8 caratteri</string>
+    <string name="change_password_mismatch">Le password non corrispondono</string>
+    <string name="change_password_saving">Salvataggio\u2026</string>
+    <string name="change_password_submit">Cambia password</string>
+
+    <string name="dashboard_greeting">Ciao, %1$s</string>
+    <string name="dashboard_overview">Ecco una panoramica delle tue finanze</string>
+    <string name="dashboard_total_balance">Saldo totale</string>
+    <string name="dashboard_checking">Conto corrente</string>
+    <string name="dashboard_savings">Risparmio</string>
+    <string name="dashboard_your_cards">Le tue carte</string>
+    <string name="dashboard_card_active">Attiva</string>
+    <string name="dashboard_card_expires">Scade %1$s</string>
+    <string name="dashboard_recent_transactions">Transazioni recenti</string>
+    <string name="dashboard_no_transactions">Nessuna transazione</string>
+
+    <string name="transactions_title">Transazioni</string>
+    <string name="transactions_all">Tutte</string>
+    <string name="transactions_salary">Stipendio</string>
+    <string name="transactions_rent">Affitto</string>
+    <string name="transactions_groceries">Spesa</string>
+    <string name="transactions_utilities">Bollette</string>
+    <string name="transactions_transport">Trasporti</string>
+    <string name="transactions_entertainment">Svago</string>
+    <string name="transactions_restaurant">Ristorante</string>
+    <string name="transactions_shopping">Shopping</string>
+    <string name="transactions_health">Salute</string>
+    <string name="transactions_insurance">Assicurazione</string>
+    <string name="transactions_subscription">Abbonamento</string>
+    <string name="transactions_transfer">Bonifico</string>
+    <string name="transactions_no_transactions">Nessuna transazione</string>
+    <string name="transactions_count">%1$d transazione</string>
+    <string name="transactions_count_plural">%1$d transazioni</string>
+    <string name="transactions_previous">Precedente</string>
+    <string name="transactions_next">Successivo</string>
+
+    <string name="cards_title">Le mie carte</string>
+    <string name="cards_settings">Impostazioni carta</string>
+    <string name="cards_contactless">Contactless</string>
+    <string name="cards_nfc_payments">Pagamenti NFC</string>
+    <string name="cards_online_payments">Pagamento online</string>
+    <string name="cards_online_purchases">Acquisti su internet</string>
+    <string name="cards_lock_card">Blocca carta</string>
+    <string name="cards_lock_temporarily">Blocco temporaneo</string>
+    <string name="cards_locked">Bloccata</string>
+    <string name="cards_active">Attiva</string>
+    <string name="cards_daily_limit">Limite giornaliero</string>
+    <string name="cards_monthly_limit">Limite mensile</string>
+
+    <string name="transfers_title">Bonifici</string>
+    <string name="transfers_new_transfer">Nuovo bonifico</string>
+    <string name="transfers_beneficiaries">Beneficiari</string>
+    <string name="transfers_from_account">Conto di addebito</string>
+    <string name="transfers_beneficiary">Beneficiario</string>
+    <string name="transfers_select_beneficiary">Seleziona un beneficiario</string>
+    <string name="transfers_amount">Importo (EUR)</string>
+    <string name="transfers_reason">Causale</string>
+    <string name="transfers_reason_placeholder">Causale del bonifico</string>
+    <string name="transfers_sending">Invio\u2026</string>
+    <string name="transfers_send_transfer">Effettua il bonifico</string>
+    <string name="transfers_transfer_success">Bonifico effettuato con successo</string>
+    <string name="transfers_saved_beneficiaries">Beneficiari salvati</string>
+    <string name="transfers_add">Aggiungi</string>
+    <string name="transfers_name">Nome</string>
+    <string name="transfers_iban">IBAN</string>
+    <string name="transfers_no_beneficiaries">Nessun beneficiario</string>
+
+    <string name="settings_title">Impostazioni</string>
+    <string name="settings_profile">Profilo</string>
+    <string name="settings_first_name">Nome</string>
+    <string name="settings_last_name">Cognome</string>
+    <string name="settings_email">Email</string>
+    <string name="settings_passkeys">Passkeys</string>
+    <string name="settings_registering">Registrazione\u2026</string>
+    <string name="settings_add_passkey">Aggiungi una passkey</string>
+    <string name="settings_passkey_registered">Passkey registrata con successo</string>
+    <string name="settings_no_passkeys">Nessuna passkey registrata</string>
+    <string name="settings_no_passkeys_hint">Aggiungi una passkey per un accesso pi\u00f9 rapido e sicuro</string>
+    <string name="settings_created_on">Creata il %1$s</string>
+    <string name="settings_last_used">Ultimo utilizzo %1$s</string>
+    <string name="settings_passkey_name_prompt">Nome della passkey (es. Pixel, Samsung)</string>
+    <string name="settings_passkey_default_name">Il mio dispositivo</string>
+    <string name="settings_delete_passkey_confirm">Eliminare questa passkey?</string>
+    <string name="settings_language">Lingua</string>
+</resources>
