@@ -33,7 +33,7 @@ export function LogsPage() {
       <h1 className="text-2xl font-bold text-white mb-6">{t('logs.title')}</h1>
 
       {/* Filters */}
-      <div className="flex gap-3 mb-4">
+      <div className="flex flex-wrap gap-3 mb-4">
         <select value={actionFilter} onChange={e => { setActionFilter(e.target.value); setPage(1); }}
           className="bg-gray-900 border border-gray-700 text-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-wl-teal">
           <option value="">{t('logs.all_actions')}</option>
@@ -51,8 +51,8 @@ export function LogsPage() {
         </select>
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-x-auto">
+        <table className="w-full text-sm min-w-[600px]">
           <thead>
             <tr className="bg-gray-800/50 border-b border-gray-800">
               <th className="text-left px-5 py-3 font-medium text-gray-400">{t('logs.col_date')}</th>
@@ -93,7 +93,7 @@ export function LogsPage() {
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
           <p className="text-sm text-gray-400">{total > 1 ? t('logs.entry_count_plural', { count: total }) : t('logs.entry_count', { count: total })}</p>
           <div className="flex gap-2">
             <button onClick={() => setPage(p => Math.max(1, p - 1))} disabled={page === 1}

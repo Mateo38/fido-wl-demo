@@ -47,7 +47,7 @@ export function SettingsPage() {
       {/* Profile */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6 mb-6">
         <h2 className="text-lg font-semibold text-white mb-4">{t('settings.profile')}</h2>
-        <div className="grid grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
           <div>
             <span className="text-slate-400">{t('settings.first_name')}</span>
             <p className="text-white mt-1">{user?.first_name}</p>
@@ -56,7 +56,7 @@ export function SettingsPage() {
             <span className="text-slate-400">{t('settings.last_name')}</span>
             <p className="text-white mt-1">{user?.last_name}</p>
           </div>
-          <div className="col-span-2">
+          <div className="sm:col-span-2">
             <span className="text-slate-400">{t('settings.email')}</span>
             <p className="text-white mt-1">{user?.email}</p>
           </div>
@@ -65,13 +65,13 @@ export function SettingsPage() {
 
       {/* Passkeys */}
       <div className="bg-slate-900 border border-slate-800 rounded-xl p-6">
-        <div className="flex items-center justify-between mb-4">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4">
           <h2 className="text-lg font-semibold text-white flex items-center gap-2">
             <Fingerprint className="w-5 h-5 text-violet-400" />
             {t('settings.passkeys')}
           </h2>
           <button onClick={handleRegister} disabled={fidoLoading}
-            className="flex items-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors disabled:opacity-50">
+            className="flex items-center justify-center gap-2 px-4 py-2 bg-violet-600 hover:bg-violet-700 text-white text-sm rounded-xl transition-colors disabled:opacity-50">
             <Plus className="w-4 h-4" />
             {fidoLoading ? t('settings.registering') : t('settings.add_passkey')}
           </button>

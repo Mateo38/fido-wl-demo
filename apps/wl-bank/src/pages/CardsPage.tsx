@@ -64,7 +64,7 @@ export function CardsPage() {
     <div>
       <h1 className="text-2xl font-bold text-white mb-6">{t('cards.title')}</h1>
 
-      <div className="max-w-md mx-auto">
+      <div className="max-w-md mx-auto px-0 sm:px-12">
         {/* Carousel */}
         <div className="relative">
           {/* Navigation arrows */}
@@ -72,13 +72,13 @@ export function CardsPage() {
             <>
               <button
                 onClick={() => goTo('left')}
-                className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-12 z-10 w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                className="absolute -left-2 sm:-left-12 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
               >
                 <ChevronLeft className="w-5 h-5" />
               </button>
               <button
                 onClick={() => goTo('right')}
-                className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-12 z-10 w-9 h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
+                className="absolute -right-2 sm:-right-12 top-1/2 -translate-y-1/2 z-10 w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-slate-400 hover:text-white hover:bg-slate-700 transition-colors"
               >
                 <ChevronRight className="w-5 h-5" />
               </button>

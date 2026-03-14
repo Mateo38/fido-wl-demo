@@ -99,8 +99,8 @@ export function UsersPage() {
         )}
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-x-auto">
+        <table className="w-full text-sm min-w-[700px]">
           <thead>
             <tr className="bg-gray-800/50 border-b border-gray-800">
               <th className="text-left px-5 py-3 font-medium text-gray-400">{t('admins.col_user')}</th>
@@ -170,14 +170,14 @@ export function UsersPage() {
       {/* Create admin modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-md shadow-xl">
+          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-md mx-4 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white">{t('admins.new_admin')}</h2>
               <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
             </div>
             {error && <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">{error}</div>}
             <form onSubmit={handleCreate} className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs text-gray-400 mb-1">{t('clients.first_name')}</label>
                   <input type="text" required value={form.first_name} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))}
@@ -218,7 +218,7 @@ export function UsersPage() {
       {/* Change role modal */}
       {showRoleModal && selectedUser && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-sm shadow-xl">
+          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-sm mx-4 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white">{t('admins.change_role')}</h2>
               <button onClick={() => setShowRoleModal(false)} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>

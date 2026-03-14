@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { Outlet, NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useTranslation } from 'react-i18next';
@@ -10,6 +11,8 @@ import {
   Settings,
   LogOut,
   Shield,
+  Menu,
+  X,
 } from 'lucide-react';
 
 const navKeys = [
@@ -24,21 +27,34 @@ export function Layout() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const { t } = useTranslation();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
     navigate('/login');
   };
 
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <div className="flex h-screen bg-slate-950">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={closeSidebar} />
+      )}
+
       {/* Sidebar */}
-      <aside className="w-64 bg-slate-900 border-r border-slate-800 flex flex-col">
-        <div className="p-6 border-b border-slate-800">
+      <aside className={`fixed inset-y-0 left-0 z-50 w-64 bg-slate-900 border-r border-slate-800 flex flex-col transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="p-6 border-b border-slate-800 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <Shield className="w-8 h-8 text-violet-500" />
             <span className="text-xl font-bold text-white">WL Bank</span>
           </div>
+          <button onClick={closeSidebar} className="lg:hidden text-slate-400 hover:text-white">
+            <X className="w-5 h-5" />
+          </button>
         </div>
 
         <nav className="flex-1 p-4 space-y-1">
@@ -47,6 +63,7 @@ export function Layout() {
               key={to}
               to={to}
               end={to === '/'}
+              onClick={closeSidebar}
               className={({ isActive }) =>
                 `flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                   isActive
@@ -85,9 +102,23 @@ export function Layout() {
       </aside>
 
       {/* Main content */}
-      <main className="flex-1 overflow-auto p-8">
-        <Outlet />
-      </main>
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Mobile header */}
+        <header className="lg:hidden flex items-center justify-between p-4 border-b border-slate-800 bg-slate-900">
+          <button onClick={() => setSidebarOpen(true)} className="text-slate-400 hover:text-white">
+            <Menu className="w-6 h-6" />
+          </button>
+          <div className="flex items-center gap-2">
+            <Shield className="w-6 h-6 text-violet-500" />
+            <span className="text-lg font-bold text-white">WL Bank</span>
+          </div>
+          <div className="w-6" />
+        </header>
+
+        <main className="flex-1 overflow-auto p-4 md:p-6 lg:p-8">
+          <Outlet />
+        </main>
+      </div>
     </div>
   );
 }

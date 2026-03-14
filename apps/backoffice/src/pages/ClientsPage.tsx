@@ -209,7 +209,7 @@ export function ClientsPage() {
       </div>
 
       {/* Filters */}
-      <div className="flex gap-2 mb-4">
+      <div className="flex flex-wrap gap-2 mb-4">
         {(['all', 'active', 'blocked', 'onboarding-tovalidate'] as const).map(f => (
           <button key={f} onClick={() => setFilter(f)}
             className={`px-3 py-1.5 text-xs font-medium rounded-lg transition-colors ${
@@ -220,8 +220,8 @@ export function ClientsPage() {
         ))}
       </div>
 
-      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-hidden">
-        <table className="w-full text-sm">
+      <div className="bg-gray-900 border border-gray-800 rounded-wl overflow-x-auto">
+        <table className="w-full text-sm min-w-[800px]">
           <thead>
             <tr className="bg-gray-800/50 border-b border-gray-800">
               <th className="text-left px-4 py-3 font-medium text-gray-400">{t('clients.col_id')}</th>
@@ -335,14 +335,14 @@ export function ClientsPage() {
       {/* Create modal */}
       {showCreateModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-md shadow-xl">
+          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-md mx-4 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white">{t('clients.new_client')}</h2>
               <button onClick={() => setShowCreateModal(false)} className="text-gray-400 hover:text-white"><X className="w-5 h-5" /></button>
             </div>
             {error && <div className="bg-red-500/10 border border-red-500/20 text-red-400 text-sm p-3 rounded-lg mb-4">{error}</div>}
             <form onSubmit={handleCreate} className="space-y-3">
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                 <div>
                   <label className="block text-xs text-gray-400 mb-1">{t('clients.first_name')}</label>
                   <input type="text" required value={form.first_name} onChange={e => setForm(f => ({ ...f, first_name: e.target.value }))}
@@ -376,7 +376,7 @@ export function ClientsPage() {
       {/* Password verification modal */}
       {showPasswordModal && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-sm shadow-xl">
+          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-sm mx-4 shadow-xl">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <Lock className="w-5 h-5 text-violet-400" />
@@ -402,7 +402,7 @@ export function ClientsPage() {
       {/* Passkey detail modal */}
       {showPasskeyModal && passkeyClient && (
         <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
-          <div className="bg-gray-900 border border-gray-700 rounded-wl p-6 w-full max-w-3xl shadow-xl max-h-[80vh] overflow-auto">
+          <div className="bg-gray-900 border border-gray-700 rounded-wl p-4 sm:p-6 w-full max-w-3xl mx-4 shadow-xl max-h-[80vh] overflow-auto">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
                 <Key className="w-5 h-5 text-wl-teal" />
@@ -418,7 +418,8 @@ export function ClientsPage() {
             ) : passkeys.length === 0 ? (
               <p className="text-center text-gray-500 py-12">{t('clients.no_passkeys')}</p>
             ) : (
-              <table className="w-full text-sm">
+              <div className="overflow-x-auto">
+              <table className="w-full text-sm min-w-[600px]">
                 <thead>
                   <tr className="bg-gray-800/50 border-b border-gray-800">
                     <th className="text-left px-4 py-2 font-medium text-gray-400">{t('clients.pk_id')}</th>
@@ -476,6 +477,7 @@ export function ClientsPage() {
                   ))}
                 </tbody>
               </table>
+              </div>
             )}
           </div>
         </div>

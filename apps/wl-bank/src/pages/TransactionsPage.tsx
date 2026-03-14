@@ -88,11 +88,11 @@ export function TransactionsPage() {
                   <p className="text-xs text-slate-500">{txn.description}</p>
                 </div>
               </div>
-              <div className="flex items-center gap-4">
-                <span className="text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">
+              <div className="flex items-center gap-2 sm:gap-4">
+                <span className="hidden sm:inline-block text-xs bg-slate-800 text-slate-400 px-2 py-0.5 rounded-full">
                   {categoryKeyMap[txn.category] ? t(categoryKeyMap[txn.category]) : txn.category}
                 </span>
-                <div className="text-right min-w-[100px]">
+                <div className="text-right min-w-[80px] sm:min-w-[100px]">
                   <p className={`text-sm font-semibold ${txn.type === 'credit' ? 'text-emerald-400' : 'text-white'}`}>
                     {txn.type === 'credit' ? '+' : '-'}{formatCurrency(parseFloat(txn.amount))}
                   </p>
@@ -106,7 +106,7 @@ export function TransactionsPage() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div className="flex items-center justify-between mt-4">
+        <div className="flex flex-col sm:flex-row items-center justify-between gap-2 mt-4">
           <p className="text-sm text-slate-500">{total > 1 ? t('transactions.count_plural', { count: total }) : t('transactions.count', { count: total })}</p>
           <div className="flex gap-2">
             <button

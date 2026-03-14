@@ -9,7 +9,7 @@ import { UsersPage } from './pages/UsersPage';
 import { LogsPage } from './pages/LogsPage';
 import { HealthPage } from './pages/HealthPage';
 import { LanguageSelector } from './components/LanguageSelector';
-import { LayoutDashboard, Users, ShieldCheck, ScrollText, Activity, LogOut, Lock, Mail } from 'lucide-react';
+import { LayoutDashboard, Users, ShieldCheck, ScrollText, Activity, LogOut, Lock, Mail, Menu, X } from 'lucide-react';
 
 const ADMIN_ROLES = ['super_admin', 'admin', 'supervisor', 'operator'];
 
@@ -108,14 +108,24 @@ function AdminLayout() {
   const { user, logout } = useAdminAuth();
   const { t } = useTranslation();
   const { hasPermission } = usePermissions(user?.role);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const navItems = allNavItems.filter(item => hasPermission(item.permission as any));
   const firstRoute = navItems[0]?.to || '/clients';
 
+  const closeSidebar = () => setSidebarOpen(false);
+
   return (
     <div className="flex h-screen bg-gray-950">
-      <aside className="w-56 bg-wl-dark flex flex-col">
-        <div className="p-4 border-b border-white/10">
+      {/* Mobile overlay */}
+      {sidebarOpen && (
+        <div className="fixed inset-0 bg-black/60 z-40 lg:hidden" onClick={closeSidebar} />
+      )}
+
+      <aside className={`fixed inset-y-0 left-0 z-50 w-56 bg-wl-dark flex flex-col transform transition-transform duration-200 ease-in-out lg:relative lg:translate-x-0 ${
+        sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+      }`}>
+        <div className="p-4 border-b border-white/10 flex items-center justify-between">
           <div className="flex items-center gap-2">
             <svg viewBox="0 0 32 32" className="w-7 h-7" fill="none">
               <rect width="32" height="32" rx="6" fill="#277777" />
@@ -126,10 +136,13 @@ function AdminLayout() {
               <p className="text-[10px] text-white/40 -mt-0.5">Worldline</p>
             </div>
           </div>
+          <button onClick={closeSidebar} className="lg:hidden text-white/50 hover:text-white">
+            <X className="w-5 h-5" />
+          </button>
         </div>
         <nav className="flex-1 p-3 space-y-0.5">
           {navItems.map(({ to, icon: Icon, key }) => (
-            <NavLink key={to} to={to} end={to === '/'} className={({ isActive }) =>
+            <NavLink key={to} to={to} end={to === '/'} onClick={closeSidebar} className={({ isActive }) =>
               `flex items-center gap-2.5 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive ? 'bg-wl-teal text-white' : 'text-white/60 hover:bg-white/10 hover:text-white'}`}>
               <Icon className="w-4 h-4" />
               {t(key)}
@@ -147,16 +160,34 @@ function AdminLayout() {
           </button>
         </div>
       </aside>
-      <main className="flex-1 overflow-auto p-6">
-        <Routes>
-          {hasPermission('dashboard:read') && <Route index element={<DashboardPage />} />}
-          {hasPermission('clients:read') && <Route path="/clients" element={<ClientsPage />} />}
-          {hasPermission('admins:read') && <Route path="/users" element={<UsersPage />} />}
-          {hasPermission('logs:read') && <Route path="/logs" element={<LogsPage />} />}
-          {hasPermission('health:read') && <Route path="/health" element={<HealthPage />} />}
-          <Route path="*" element={<Navigate to={firstRoute} replace />} />
-        </Routes>
-      </main>
+
+      <div className="flex-1 flex flex-col min-w-0">
+        {/* Mobile header */}
+        <header className="lg:hidden flex items-center justify-between p-4 border-b border-gray-800 bg-wl-dark">
+          <button onClick={() => setSidebarOpen(true)} className="text-white/60 hover:text-white">
+            <Menu className="w-6 h-6" />
+          </button>
+          <div className="flex items-center gap-2">
+            <svg viewBox="0 0 32 32" className="w-6 h-6" fill="none">
+              <rect width="32" height="32" rx="6" fill="#277777" />
+              <path d="M10 16 L14 22 L22 11" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+            <span className="text-base font-bold text-white">Backoffice</span>
+          </div>
+          <div className="w-6" />
+        </header>
+
+        <main className="flex-1 overflow-auto p-4 md:p-6">
+          <Routes>
+            {hasPermission('dashboard:read') && <Route index element={<DashboardPage />} />}
+            {hasPermission('clients:read') && <Route path="/clients" element={<ClientsPage />} />}
+            {hasPermission('admins:read') && <Route path="/users" element={<UsersPage />} />}
+            {hasPermission('logs:read') && <Route path="/logs" element={<LogsPage />} />}
+            {hasPermission('health:read') && <Route path="/health" element={<HealthPage />} />}
+            <Route path="*" element={<Navigate to={firstRoute} replace />} />
+          </Routes>
+        </main>
+      </div>
     </div>
   );
 }
