@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.hilt)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.firebase.appdistribution)
 }
 
 android {
@@ -19,10 +21,31 @@ android {
         buildConfigField("String", "API_BASE_URL", "\"http://10.0.2.2:3001/api\"")
     }
 
+    signingConfigs {
+        create("release") {
+            val keystorePath = System.getenv("KEYSTORE_PATH") ?: "../wlbank-release.jks"
+            val ksPassword = System.getenv("KEYSTORE_PASSWORD") ?: ""
+            val ksAlias = System.getenv("KEY_ALIAS") ?: "wlbank"
+            val ksKeyPassword = System.getenv("KEY_PASSWORD") ?: ""
+
+            storeFile = file(keystorePath)
+            storePassword = ksPassword
+            keyAlias = ksAlias
+            keyPassword = ksKeyPassword
+        }
+    }
+
     buildTypes {
         release {
             isMinifyEnabled = false
             proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+            signingConfig = signingConfigs.getByName("release")
+
+            firebaseAppDistribution {
+                artifactType = "APK"
+                groups = "testers"
+                releaseNotes = "WL Bank Android v${defaultConfig.versionName}"
+            }
         }
     }
     compileOptions {
@@ -68,5 +91,6 @@ dependencies {
     implementation(libs.credentials.play.services)
     implementation(libs.appcompat)
     implementation(libs.kotlinx.coroutines.android)
+    implementation(platform(libs.firebase.bom))
     debugImplementation(libs.androidx.ui.tooling)
 }
